@@ -13,4 +13,5 @@ vim.opt.rtp:prepend(lazypath)
 vim.cmd('set number relativenumber')
 
 require("vim-options")
+require("remaps")
 require("lazy").setup("plugins")

@@ -19,8 +19,8 @@ return {
 			local mauve_highlight =
 				wilder.make_hl("WilderMauve", { { a = 1 }, { a = 1 }, { foreground = macchiato.mauve } })
 
-			-- Enable wilder when pressing / or ?
-			wilder.setup({ modes = { "/", "?" } })
+			-- Enable wilder when pressing : or / or ?
+			wilder.setup({ modes = {"/", "?" } })
 
 			-- Enable fuzzy matching for commands and buffers
 			wilder.set_option("pipeline", {

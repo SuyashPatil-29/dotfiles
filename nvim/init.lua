@@ -14,4 +14,13 @@ vim.cmd('set number relativenumber')
 
 require("vim-options")
 require("remaps")
+require("snippets")
 require("lazy").setup("plugins")
+
+if vim.opt.termguicolors:get() then
+  vim.opt.termguicolors = true
+end
+
+require("notify").setup({
+  background_colour = "#1e1e2e",   -- A dark bluish-gray color
+})

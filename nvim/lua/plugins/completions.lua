@@ -5,10 +5,26 @@ return {
     dependencies = {
       "rafamadriz/friendly-snippets",
       "saadparwaiz1/cmp_luasnip",
-      "onsails/lspkind.nvim",
     },
     config = function()
       require("luasnip.loaders.from_vscode").lazy_load()
+      -- Add C++ snippets
+      local luasnip = require('luasnip')
+      local s = luasnip.snippet
+      local t = luasnip.text_node
+      local i = luasnip.insert_node
+
+      luasnip.add_snippets('cpp', {
+        s('cpp', {
+          t('#include <bits/stdc++.h>'),
+          t('using namespace std;'),
+          t(''),
+          t('int main() {'),
+          t('    // Your code here'),
+          t('    return 0;'),
+          t('}'),
+        }),
+      })
     end,
   },
   {
@@ -16,12 +32,10 @@ return {
     lazy = false,
     config = true,
   },
-  { "hrsh7th/cmp-cmdline" },
   {
     "hrsh7th/nvim-cmp",
     lazy = false,
     config = function()
-      local lspkind = require("lspkind")
       local cmp = require("cmp")
       cmp.setup({
         window = {
@@ -46,21 +60,6 @@ return {
         }, {
           { name = "buffer" },
         }),
-
-        formatting = {
-          expandable_indicator = true,
-          format = lspkind.cmp_format({
-            mode = "symbol_text",
-            maxwidth = 50,
-            ellipsis_char = "...",
-            symbol_map = {
-              Copilot = "",
-            },
-          }),
-        },
-        experimental = {
-          ghost_text = true,
-        }
       })
     end,
   },

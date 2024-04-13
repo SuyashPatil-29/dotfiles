@@ -1,5 +1,5 @@
 return {
-  "Exafunction/codeium.vim",
-  config = function()
-  end,
+  -- "Exafunction/codeium.vim",
+  -- config = function()
+  -- end,
 }

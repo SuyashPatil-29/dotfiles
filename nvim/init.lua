@@ -22,5 +22,5 @@ if vim.opt.termguicolors:get() then
 end
 
 require("notify").setup({
-  background_colour = "#1e1e2e",   -- A dark bluish-gray color
+  background_colour = "#1e1e2e", -- A dark bluish-gray color
 })

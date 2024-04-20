@@ -94,10 +94,6 @@ vim.api.nvim_set_keymap('n', '<leader>qq', ':cclose<CR>', { noremap = true, sile
 -- Delete everything on screen
 vim.api.nvim_set_keymap('n', '<leader>d', 'ggVGd', { noremap = true, silent = true })
 
-
--- Remap <C-/> to gcc
-vim.api.nvim_set_keymap('n', '<C-/>', ':normal gcc<CR>', { noremap = true, silent = true })
-
 vim.api.nvim_set_keymap('n', '<A-Up>', ':m-2<CR>', { noremap = true, silent = true })
 
 vim.api.nvim_set_keymap('n', '<A-Down>', ':m+1<CR>', { noremap = true, silent = true })
@@ -147,3 +143,6 @@ vim.api.nvim_set_keymap('n', '<S-A-Down>', '<cmd>call append(line("."), getline(
 
 -- Paste selected text
 vim.api.nvim_set_keymap('v', '<C-z>', 'y\'>p', { noremap = true, silent = true })
+
+-- Remap escape key to go to normal mode
+vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })

@@ -1,6 +1,6 @@
 return {
 	'ThePrimeagen/vim-be-good',
-  lazy = true,
+  event = "VeryLazy",
   cmd = { "VimBeGood" },
 	config = function()
 		-- require("ibl").setup()

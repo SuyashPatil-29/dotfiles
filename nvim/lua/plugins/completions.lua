@@ -9,21 +9,17 @@ return {
     config = function()
       require("luasnip.loaders.from_vscode").lazy_load()
       -- Add C++ snippets
-      local luasnip = require('luasnip')
-      local s = luasnip.snippet
-      local t = luasnip.text_node
-      local i = luasnip.insert_node
+      local ls = require "luasnip"
+      local s = ls.snippet
+      local t = ls.text_node
+      local i = ls.insert_node
 
-      luasnip.add_snippets('cpp', {
+      ls.add_snippets('lua', {
         s('cpp', {
-          t('#include <bits/stdc++.h>'),
-          t('using namespace std;'),
-          t(''),
-          t('int main() {'),
-          t('    // Your code here'),
-          t('    return 0;'),
-          t('}'),
-        }),
+          s("hello", {
+            t('print("hello world")')
+          })
+        })
       })
     end,
   },

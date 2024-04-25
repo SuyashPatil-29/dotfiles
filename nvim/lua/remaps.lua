@@ -7,7 +7,7 @@ vim.keymap.set("n", "<leader>Y", '"+Y', { desc = 'Yank into " register' })
 
 -- Delete text to " register
 vim.keymap.set("n", "<leader>d", '"_d', { desc = 'Delete into " register' })
-    vim.keymap.set("v", "<leader>d", '"_d', { desc = 'Delete into " register' })
+vim.keymap.set("v", "<leader>d", '"_d', { desc = 'Delete into " register' })
 
 -- Space + a to select all text
 vim.api.nvim_set_keymap('n', '<leader>a', 'ggVG', { noremap = true })
@@ -74,7 +74,7 @@ vim.api.nvim_set_keymap('n', ']e', ':lua vim.diagnostic.goto_next({severity = vi
   { noremap = true, silent = true })
 
 --rip grep in current working directory
-vim.api.nvim_set_keymap('n', '<leader>g', ':lua require("telescope.builtin").live_grep()<CR>',
+vim.api.nvim_set_keymap('n', '<leader>lg', ':lua require("telescope.builtin").live_grep()<CR>',
   { noremap = true, silent = true })
 
 -- Open a new line above the current line in normal mode
@@ -146,3 +146,6 @@ vim.api.nvim_set_keymap('v', '<C-z>', 'y\'>p', { noremap = true, silent = true }
 
 -- Remap escape key to go to normal mode
 vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
+
+--colorscheme
+vim.keymap.set("n", "<leader>th", ":colorscheme ", { noremap = true })

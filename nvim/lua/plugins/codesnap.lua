@@ -1,6 +1,6 @@
-return{
+return {
   "mistricky/codesnap.nvim",
-    event = "VeryLazy",
+  lazy = true,
   build = "make",
   cmd = "CodeSnapPreviewOn",
   config = function()

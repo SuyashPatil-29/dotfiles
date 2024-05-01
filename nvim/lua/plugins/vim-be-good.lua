@@ -1,8 +1,8 @@
 return {
-	'ThePrimeagen/vim-be-good',
-  event = "VeryLazy",
+  'ThePrimeagen/vim-be-good',
+  lazy = true,
   cmd = { "VimBeGood" },
-	config = function()
-		-- require("ibl").setup()
-	end,
+  config = function()
+    -- require("ibl").setup()
+  end,
 }

@@ -24,5 +24,3 @@ end
 require("notify").setup({
   background_colour = "#1e1e2e", -- A dark bluish-gray color
 })
-
-vim.cmd "colorscheme codemonkey"

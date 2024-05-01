@@ -1,7 +1,6 @@
 return {
   {
     "gelguy/wilder.nvim",
-    event = "VeryLazy",
     cmd = "WilderToggle",
     keys = {
       "/",

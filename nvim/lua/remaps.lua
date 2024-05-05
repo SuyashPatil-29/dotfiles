@@ -5,6 +5,16 @@ vim.keymap.set("n", "<leader>y", '"+y', { desc = 'Yank into " register' })
 vim.keymap.set("v", "<leader>y", '"+y<CR>gv', { desc = 'Yank into " register' })
 vim.keymap.set("n", "<leader>Y", '"+Y', { desc = 'Yank into " register' })
 
+-- paste over currently selected text without yanking it
+vim.keymap.set("v", "p", '"_dp')
+vim.keymap.set("v", "P", '"_dP')
+
+-- Split line with X
+vim.keymap.set("n", "X", ":keeppatterns substitute/\\s*\\%#\\s*/\\r/e <bar> normal! ==^<cr>", { silent = true })
+
+-- ctrl + x to cut full line
+vim.keymap.set("n", "<C-x>", "dd", { noremap = true, silent = true })
+
 -- Delete text to " register
 vim.keymap.set("n", "<leader>d", '"_d', { desc = 'Delete into " register' })
 vim.keymap.set("v", "<leader>d", '"_d', { desc = 'Delete into " register' })
@@ -79,14 +89,6 @@ vim.api.nvim_set_keymap(
   ":lua vim.diagnostic.goto_next({severity = vim.diagnostic.severity.ERROR})<CR>zz",
   { noremap = true, silent = true }
 )
-
--- Open a new line above the current line in normal mode
-vim.api.nvim_set_keymap("n", "<leader>o", "O<Esc>", { noremap = true })
-
--- Open a new tab
-vim.api.nvim_set_keymap("n", "<leader>t", ":tabe<CR>", { noremap = true, silent = true })
-
-vim.api.nvim_set_keymap("n", "<leader>ss", ":CodeSnapPreviewOn", { noremap = true, silent = true })
 
 --Open Quickfix window
 vim.api.nvim_set_keymap("n", "<leader>q", ":copen<CR>", { noremap = true, silent = true })
@@ -185,3 +187,9 @@ vim.keymap.set("n", "<C-l>", ":vertical resize -3<CR>")
 -- Navigate buffers
 vim.keymap.set("n", "<S-Right>", ":bnext<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<S-Left>", ":bprevious<CR>", { noremap = true, silent = true })
+
+-- Remove search highlight
+vim.keymap.set('n', '<leader>hd', '<cmd>nohl<CR>', { desc = 'Remove search highlight' })
+
+-- Open the Desktop folder
+vim.keymap.set('n', '<leader>gx', ':!xdg-open "$HOME/Desktop"<CR>', { noremap = true, silent = true })

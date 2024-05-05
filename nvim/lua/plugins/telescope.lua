@@ -24,7 +24,6 @@ return {
 
       require("telescope").setup {
         file_ignore_patterns = { "%.git/." },
-        -- borderchars = { "█", " ", "▀", "█", "█", " ", " ", "▀" },
         defaults = {
           mappings = {
             i = {
@@ -42,7 +41,7 @@ return {
           select_strategy = "reset",
           sorting_strategy = "ascending",
           color_devicons = true,
-          set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
+          set_env = { ["COLORTERM"] = "truecolor" },
           layout_config = {
             prompt_position = "top",
             preview_cutoff = 120,
@@ -62,7 +61,6 @@ return {
         pickers = {
           find_files = {
             previewer = false,
-            -- path_display = formattedName,
             layout_config = {
               height = 0.4,
               prompt_position = "top",
@@ -71,7 +69,6 @@ return {
           },
           git_files = {
             previewer = false,
-            -- path_display = formattedName,
             layout_config = {
               height = 0.4,
               prompt_position = "top",
@@ -89,7 +86,6 @@ return {
             },
             previewer = false,
             initial_mode = "normal",
-            --theme = "dropdown",
             layout_config = {
               height = 0.4,
               width = 0.6,
@@ -126,17 +122,16 @@ return {
         },
         extensions = {
           fzf = {
-            fuzzy = true,                   -- false will only do exact matching
-            override_generic_sorter = true, -- override the generic sorter
-            override_file_sorter = true,    -- override the file sorter
-            case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
+            fuzzy = true,
+            override_generic_sorter = true,
+            override_file_sorter = true,
+            case_mode = "smart_case",
           },
           ["ui-select"] = {
             require("telescope.themes").get_dropdown {
               previewer = false,
               initial_mode = "normal",
               sorting_strategy = "ascending",
-              layout_strategy = "horizontal",
               layout_config = {
                 horizontal = {
                   width = 0.5,
@@ -165,7 +160,6 @@ return {
       }
 
       local builtin = require "telescope.builtin"
-      local actions = require "telescope.actions"
       local action_state = require "telescope.actions.state"
       local pickers = require "telescope.pickers"
       local finders = require "telescope.finders"
@@ -234,7 +228,7 @@ return {
           map("n", "<Up>", prev_color)
           return true
         end,
-        theme = "dropdown", -- Use the 'ivy' theme for better UX
+        theme = "dropdown",
       }
 
       local colors = pickers.new(opts)
@@ -244,7 +238,47 @@ return {
 
       vim.keymap.set("n", "<C-p>", builtin.find_files, {})
       vim.keymap.set("n", "<leader>lg", builtin.live_grep, {})
-      vim.keymap.set("n", "<leader>o", builtin.buffers, { desc = "Find Buffers" })
+      vim.keymap.set("n", "<C-o>", builtin.buffers, { desc = "Find Buffers" })
+
+      require("telescope").load_extension "ui-select"
+
+      -- Function to switch tmux sessions
+      function switch_tmux_session(prompt_bufnr)
+        local selected = action_state.get_selected_entry()
+        if selected then
+          local session_name = selected.value
+          vim.cmd("silent !tmux switch-client -t " .. session_name)
+          actions.close(prompt_bufnr)
+        end
+      end
+
+      -- Custom picker for tmux sessions
+      local opts = {
+        finder = finders.new_oneshot_job(
+          { "tmux", "list-sessions", "-F", "#{session_name}" },
+          {
+            entry_maker = function(entry)
+              return {
+                value = entry,
+                display = entry,
+                ordinal = entry,
+              }
+            end,
+          }
+        ),
+        sorter = sorters.get_generic_fuzzy_sorter {},
+        attach_mappings = function(prompt_bufnr, map)
+          map("i", "<CR>", switch_tmux_session)
+          map("n", "<CR>", switch_tmux_session)
+          return true
+        end,
+        theme = "dropdown",
+      }
+
+      local tmux_sessions = pickers.new(opts, opts)
+      vim.keymap.set("n", "<leader>ts", function()
+        tmux_sessions:find()
+      end, { desc = "Switch Tmux Sessions" })
 
       require("telescope").load_extension "ui-select"
     end,

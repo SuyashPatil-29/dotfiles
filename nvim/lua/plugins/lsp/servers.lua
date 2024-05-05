@@ -1,12 +1,4 @@
 return {
-  jsonls = {
-    settings = {
-      json = {
-        schema = require("schemastore").json.schemas(),
-        validate = { enable = true },
-      },
-    },
-  },
   lua_ls = {
     settings = {
       Lua = {
@@ -30,19 +22,19 @@ return {
       },
     },
   },
-  clangd = {
-    filetypes = { "c", "cpp" },
-    cmd = { "clangd" },
-    init_options = {
-      clangdFileStatus = true,
-      usePlaceholderReferences = true,
-      completeUnimported = true,
-      semanticHighlighting = true,
-    },
-  },
   bashls = {
     filetypes = { "sh", "zsh" },
   },
+  clangd = {
+    offsetEncodingFilter = nil,
+  },
+  jdtls = {
+    filetypes = { "java" },
+  },
+  pylsp = {
+    filetypes = { "py" }
+  },
+  gopls = {},
   vimls = {
     filetypes = { "vim" },
   },

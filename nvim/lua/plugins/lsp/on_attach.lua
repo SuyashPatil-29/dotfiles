@@ -27,7 +27,7 @@ M.on_attach = function(_, bufnr)
   --   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   -- end, "Workspace List Folders")
 
-  nmap("<leader>v", "<cmd>vsplit | lua vim.lsp.buf.definition()<cr>", "Goto Definition in Vertical Split")
+  nmap("<leader>vs", "<cmd>vsplit | lua vim.lsp.buf.definition()<cr>", "Goto Definition in Vertical Split")
 
   -- local client = vim.lsp.get_client_by_id(event.data.client_id)
   -- if client and client.server_capabilities.documentHighlightProvider then

@@ -5,21 +5,6 @@ return {
     opts = {},
   },
 
-  {
-    "windwp/nvim-autopairs",
-    opts = {
-      fast_wrap = {},
-      disable_filetype = { "TelescopePrompt", "vim" },
-    },
-    config = function(_, opts)
-      require("nvim-autopairs").setup(opts)
-
-      -- setup cmp for autopairs
-      local cmp_autopairs = require "nvim-autopairs.completion.cmp"
-      require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
-    end,
-  },
-
   -- delete buffer
   {
     "famiu/bufdelete.nvim",
@@ -65,6 +50,13 @@ return {
     end,
   },
 
+  -- LSP client for JAVA using jdtls
+  {
+    "mfussenegger/nvim-jdtls",
+    config = function()
+    end
+  },
+
   -- Smooth scrolling neovim plugin written in lua
   {
     "karb94/neoscroll.nvim",
@@ -91,11 +83,10 @@ return {
               filetype = "neo-tree",
               text = "File Explorer",
               text_align = "center",
-              separator = true,
             },
           },
           numbers = "ordinal",
-          separator_style = "slant",
+          -- separator_style = "slant",
           show_buffer_close_icons = true,
           show_close_icon = true,
           max_name_length = 18,
@@ -158,11 +149,6 @@ return {
     config = function()
       require("nvim-surround").setup()
     end,
-  },
-
-  -- Heuristically set buffer options
-  {
-    "tpope/vim-sleuth",
   },
 
   -- Neovim setup for init.lua and plugin development with full signature help, docs and completion for the nvim lua API
@@ -363,37 +349,17 @@ return {
       require("refactoring").setup {}
     end,
   },
-
   {
-    "echasnovski/mini.statusline",
-    enabled = false,
-    version = "*",
+    "folke/persistence.nvim",
+    event = "BufReadPre", -- this will only start session saving when an actual file was opened
+    opts = {},
+  },
+  {
+    'ThePrimeagen/vim-be-good',
+    lazy = true,
+    cmd = { "VimBeGood" },
     config = function()
-      vim.cmd "highlight MiniStatuslineFilename guifg=#C7D3F8 guibg=#1E2032"
-
-      local statusline = require "mini.statusline"
-
-      statusline.setup {
-        use_icons = vim.g.have_nerd_font,
-      }
-
-      local mode, mode_hl = statusline.section_mode { trunc_width = 120 }
-      local git = statusline.section_git { trunc_width = 75 }
-      local diagnostics = statusline.section_diagnostics { trunc_width = 75 }
-      local filename = statusline.section_filename { trunc_width = 140 }
-      local fileinfo = statusline.section_fileinfo { trunc_width = 120 }
-      local location = statusline.section_location { trunc_width = 75 }
-      local search = statusline.section_searchcount { trunc_width = 75 }
-
-      statusline.combine_groups {
-        { hl = mode_hl,                 strings = { mode } },
-        { hl = "MiniStatuslineDevinfo", strings = { git, diagnostics } },
-        "%<", -- Mark general truncate point
-        { hl = "MiniStatuslineFilename", strings = { filename } },
-        "%=", -- End left alignment
-        { hl = "MiniStatuslineFileinfo", strings = { fileinfo } },
-        { hl = mode_hl,                  strings = { search, location } },
-      }
+      -- require("ibl").setup()
     end,
   },
 }

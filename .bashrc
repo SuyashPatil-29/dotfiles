@@ -694,8 +694,9 @@ eval "$(zoxide init bash)"
 export PATH="$PATH:/path/to/prettier/bin"
 export PATH="$PATH:/path/to/eslint_d/bin"
 
-
-
+#Go
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH=$HOME/go
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -703,9 +704,89 @@ export PATH=$BUN_INSTALL/bin:$PATH
 
 
 #alias 
-alias f="history | fzf | sed 's/^ *[0-9]* *//'"
 alias c="clear"
 alias prisma-migrate="npx prisma migrate dev --name init"
 alias fman="compgen -c | fzf | xargs man"
-alias nv="nvim"
-alias ls="ls -l"
+alias ls="exa"
+alias tmux="tmux -u"
+alias nvconf="z nvim && nvim ."
+alias kconf="nvim ~/.config/kitty/kitty.conf"
+alias tconf="nvim ~/.tmux.conf"
+alias nv='fd --type f --hidden --exclude .git | fzf-tmux -p | xargs nvim'
+cnda() {
+    if [ $# -eq 0 ]; then
+        echo "Please provide a project name."
+        return 1
+    fi
+
+    project_name="$1"
+    git clone https://github.com/SuyashPatil-29/next-drizzle-supabase-nextauth-starter.git "$project_name" && cd "$project_name" && npm install && npm update
+}
+
+
+# pnpm
+export PNPM_HOME="/home/suyash/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+
+# alias pnpx = "pnpm dlx"
+# pnpm end
+
+
+#c++ for cp
+alias compile='function _compile() { g++ "$1" -o "${1%.*}" && ./"${1%.*}" && rm -f "${1%.*}" 2>/dev/null; }; _compile'
+
+# jrun for java file's 
+jrun() {
+    # Check if a Java file is provided as an argument
+    if [ $# -eq 0 ]; then
+        echo "Usage: jrun filename.java"
+        return 1
+    fi
+
+    # Extract the filename without extension
+    filename=$(basename "$1" .java)
+
+    # Compile the Java file
+    javac "$1" > /dev/null 2>&1
+    if [ $? -ne 0 ]; then
+        echo "Compilation failed."
+        return 1
+    fi
+
+    # Run the compiled Java program, filtering out messages related to trashing the .class file
+    java "$filename" 2>&1 | grep -v 'trash:'
+
+    # Remove the compiled .class file, suppressing the "trash" message
+    rm "$filename.class" > /dev/null 2>&1
+}
+
+#Fly.io cli
+export FLYCTL_INSTALL="/home/suyash/.fly"
+export PATH="$FLYCTL_INSTALL/bin:$PATH"
+
+#create next app with Bun
+alias cna='bunx create-next-app@latest $1'
+alias tf="$(thefuck --alias)"
+
+#Tmuxifier path
+export PATH="$HOME/.tmuxifier/bin:$PATH"
+eval "$(tmuxifier init -)"
+
+alias tn="tmux new -As \$(basename \$(pwd))"
+
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+
+alias entersql="sudo mysql -u root -p"
+
+# bind 'set show-all-if-ambiguous on'
+# bind 'TAB:menu-complete'
+# bind '"\e[Z":menu-complete-backward'
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"

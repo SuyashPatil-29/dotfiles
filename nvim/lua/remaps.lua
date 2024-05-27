@@ -1,4 +1,4 @@
-vim.keymap.set("n", "<leader>pv", vim.cmd.Explore, { desc = "Open NetRW" })
+-- Dismiss messages displayed by Noice
 vim.keymap.set("n", "<leader>nd", "<cmd>NoiceDismiss<CR>", { desc = "Dismiss Noice Message" })
 -- Copy text to " register
 vim.keymap.set("n", "<leader>y", '"+y', { desc = 'Yank into " register' })
@@ -193,3 +193,6 @@ vim.keymap.set('n', '<leader>hd', '<cmd>nohl<CR>', { desc = 'Remove search highl
 
 -- Open the Desktop folder
 vim.keymap.set('n', '<leader>gx', ':!xdg-open "$HOME/Desktop"<CR>', { noremap = true, silent = true })
+
+-- Format python code
+vim.keymap.set("n", "<leader>gp", ":silent !black %<cr>")

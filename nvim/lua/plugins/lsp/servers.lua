@@ -31,13 +31,14 @@ return {
   jdtls = {
     filetypes = { "java" },
   },
-  pylsp = {
-    filetypes = { "py" }
+  pyright = {
+    filetypes = {"py"}
   },
   gopls = {},
   vimls = {
     filetypes = { "vim" },
   },
+  omnisharp = {},
   tsserver = {},
   yamlls = {
     cmd = { "yaml-language-server", "--stdio" },

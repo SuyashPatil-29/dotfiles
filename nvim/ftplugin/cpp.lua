@@ -11,10 +11,8 @@ if vim.bo.filetype == 'cpp' then
       "using namespace std;",
       "",
       "int main(){",
-      "",
-      "    return 0;",
+      "  return 0;",
       "}",
-      ""
     }
 
     -- Insert the lines at the beginning of the buffer

@@ -6,6 +6,7 @@ return {
     "williamboman/mason-lspconfig.nvim",
     { "j-hui/fidget.nvim",       opts = {} },
     "folke/neodev.nvim",
+    "OmniSharp/omnisharp-vim",
   },
   lazy = false,
   config = function()
@@ -24,8 +25,9 @@ return {
     })
 
     require("mason-lspconfig").setup({
-      ensure_installed = {"tailwindcss", "html"},
+      ensure_installed = { "tailwindcss", "html" },
     })
+
 
     require("lspconfig.ui.windows").default_options.border = "single"
 
@@ -42,12 +44,26 @@ return {
       function(server_name)
         require("lspconfig")[server_name].setup({
           capabilities = capabilities,
-          -- on_attach = require("plugins.lsp.on_attach").on_attach,
+          on_attach = require("plugins.lsp.on_attach").on_attach,
           settings = require("plugins.lsp.servers")[server_name],
           filetypes = (require("plugins.lsp.servers")[server_name] or {}).filetypes,
         })
       end,
     })
+
+    -- Python environment
+    local util = require("lspconfig/util")
+    local path = util.path
+    require('lspconfig').pyright.setup {
+      on_attach = require("plugins.lsp.on_attach").on_attach,
+      capabilities = capabilities,
+      before_init = function(_, config)
+        -- pwd path where all python codes should be stored for python to work properly
+        local default_venv_path = path.join(vim.env.HOME, "Desktop", "NHCE", "Sem4", "ds", "bin", "python")
+        config.settings.python.pythonPath = default_venv_path
+      end,
+    }
+
     vim.diagnostic.config({
       title = false,
       underline = true,

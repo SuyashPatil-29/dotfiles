@@ -237,7 +237,7 @@ return {
       end, { desc = "Color Picker" })
 
       vim.keymap.set("n", "<C-p>", builtin.find_files, {})
-      vim.keymap.set("n", "<leader>lg", builtin.live_grep, {})
+      vim.keymap.set("n", "<leader>lg", builtin.live_grep, {desc = "Open live grep"})
       vim.keymap.set("n", "<C-o>", builtin.buffers, { desc = "Find Buffers" })
 
       require("telescope").load_extension "ui-select"

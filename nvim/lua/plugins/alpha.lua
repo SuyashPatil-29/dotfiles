@@ -34,6 +34,18 @@ return {
     --    ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝
     -- ]]
 
+   --  local logo = [[
+	  --           ▀████▀▄▄              ▄█
+			--           █▀    ▀▀▄▄▄▄▄    ▄▄▀▀█
+			--   ▄        █          ▀▀▀▀▄  ▄▀ 
+			--  ▄▀ ▀▄      ▀▄              ▀▄▀ 
+			-- ▄▀    █     █▀   ▄█▀▄      ▄█   
+			-- ▀▄     ▀▄  █     ▀██▀     ██▄█  
+			--  ▀▄    ▄▀ █   ▄██▄   ▄  ▄  ▀▀ █ 
+			--   █  ▄▀  █    ▀██▀    ▀▀ ▀▀  ▄▀ 
+			--  █   █  █      ▄▄           ▄▀  
+   --  ]]
+
     dashboard.section.header.val = vim.split(logo, "\n")
     dashboard.section.buttons.val = {
       dashboard.button("f", " " .. " Find file", ":Telescope find_files <CR>"),

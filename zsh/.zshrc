@@ -1,3 +1,9 @@
+# Make a directory called zsh in your home/user example home/suyash/zsh or ~/zsh
+# Add both the optionrc and pluginrc files to that directory 
+# Then add the following to your .zshrc file
+# source ~/zsh/.zshrc
+#Dont forget to change the value of OPENAI_API_KEY in the .zshrc file (current file)
+
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=110000
@@ -32,7 +38,7 @@ alias tmux="tmux -u"
 alias tn="tmux new -As \$(basename \$(pwd))"
 alias entersql="sudo mysql -u root -p"
 alias nv='fd --type f --hidden --exclude .git | fzf-tmux -p | xargs nvim'
-alias nvconf="z nvim && nvim ."
+alias nvconf="nvim ~/.config/nvim/"
 alias kconf="nvim ~/.config/kitty/kitty.conf"
 alias tconf="nvim ~/.tmux.conf"
 alias zconf="nvim ~/.zshrc"
@@ -40,6 +46,10 @@ alias tkill="tmux kill-session -t"
 alias tlist="tmux list-sessions"
 alias tattach="tmux attach"
 alias dotfiles='cd ~/Desktop/dotfiles/'
+alias nvim-adib="NVIM_APPNAME=nvim-adib nvim"
+alias countlines="tokei ."
+alias ta="tmux attach"
+
 # Replace batcat with cat on Fedora as batcat is not available as a RPM in any form
 if command -v lsb_release > /dev/null; then
     DISTRIBUTION=$(lsb_release -si)
@@ -131,9 +141,16 @@ mkdirg ()
 
 # Exports
 export XDG_DATA_DIRS="$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:/home/suyash/.local/share/flatpak/exports/share"
-export PATH="$PATH:/path/to/prettier/bin"
-export PATH="$PATH:/path/to/eslint_d/bin"
 export PATH="/usr/local/go/bin:$PATH"
+export PATH="$PATH:$HOME/.local/bin"
+# pnpm
+export PNPM_HOME="/home/suyash/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+export OPENAI_API_KEY="Your openai api key"
 
 eval "$(atuin init zsh)"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
@@ -143,3 +160,4 @@ eval "$(zoxide init zsh)"
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+

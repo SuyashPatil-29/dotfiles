@@ -5,7 +5,7 @@ return {
     local s = ls.snippet
     local t = ls.text_node
     local i = ls.insert_node
-    local extras = require("luasnip.extras")
+    local extras = require "luasnip.extras"
     local rep = extras.rep
     local fmt = require("luasnip.extras.fmt").fmt
     local c = ls.choice_node
@@ -33,82 +33,87 @@ return {
 
     ls.add_snippets("lua", {
       s("hello", {
-        t('print("hello '),
+        t 'print("hello ',
         i(1),
-        t(' world")')
+        t ' world")',
       }),
 
       s("if", {
-        t('if '),
+        t "if ",
         i(1, "true"),
-        t(' then '),
+        t " then ",
         i(2),
-        t(' end')
-      })
+        t " end",
+      }),
     })
 
     ls.add_snippets("tex", {
       s("beg", {
-        t("\\begin{"), i(1), t("}"),
-        t({ "", "\t" }), i(0),
-        t({ "", "\\end{" }), rep(1), t("}"),
-      })
+        t "\\begin{",
+        i(1),
+        t "}",
+        t { "", "\t" },
+        i(0),
+        t { "", "\\end{" },
+        rep(1),
+        t "}",
+      }),
     })
 
-    ls.add_snippets("cpp", {
-      s("arr", {
-        t("vector<int> arr = {};"),
-        t({ "", "" }), -- This will insert a newline without moving the cursor
-        t("int n = arr.size();"),
-      })
-    })
-
+    -- ls.add_snippets("cpp", {
+    --   s("arr", {
+    --     t "vector<int> arr = {};",
+    --     t { "", "" }, -- This will insert a newline without moving the cursor
+    --     t "int n = arr.size();",
+    --   }),
+    -- })
 
     ls.add_snippets("cs", {
-      s("logc",
-        fmt([[Debug.Log($"<color={}>{}</color>");]],
-          {
-            c(1, {
-              t("red"),
-              t("green"),
-              t("blue"),
-              t("cyan"),
-              t("magenta")
-            }),
-            i(2),
-          })),
+      s(
+        "logc",
+        fmt([[Debug.Log($"<color={}>{}</color>");]], {
+          c(1, {
+            t "red",
+            t "green",
+            t "blue",
+            t "cyan",
+            t "magenta",
+          }),
+          i(2),
+        })
+      ),
     })
 
     ls.add_snippets("typescriptreact", {
 
       -- 1st version
       s("co", {
-        t("position(["),
+        t "position([",
         f(function()
-          local register_data = vim.fn.getreg() .. "";
+          local register_data = vim.fn.getreg() .. ""
           if string.match(register_data, "[%d-]+,%s*[%d-]+") then
             return register_data
           else
-            print("register does not contain the pattern")
+            print "register does not contain the pattern"
           end
         end),
-        t("])"),
+        t "])",
       }),
 
       s("co", {
         d(function()
-          local register_data = vim.fn.getreg() .. "";
+          local register_data = vim.fn.getreg() .. ""
           if string.match(register_data, "[%d-]+,%s*[%d-]+") then
             return M.sn(nil, {
               M.t("position([" .. register_data .. "])"),
             })
           else
-            print("register does not contain the pattern")
+            print "register does not contain the pattern"
             return M.sn(nil, {})
           end
         end),
-        i(1)
-      })
+        i(1),
+      }),
     })
-  end
+  end,
 }

@@ -108,6 +108,8 @@ return {
         { name = "tmux" },
       },
       formatting = {
+        expandable_indicator = true,
+        fields = { "kind", "abbr", "menu" },
         format = function(entry, vim_item)
           local lspkind_ok, lspkind = pcall(require, "lspkind")
           if not lspkind_ok then

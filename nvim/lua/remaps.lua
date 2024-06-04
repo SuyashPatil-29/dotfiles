@@ -189,10 +189,10 @@ vim.keymap.set("n", "<S-Right>", ":bnext<CR>", { noremap = true, silent = true }
 vim.keymap.set("n", "<S-Left>", ":bprevious<CR>", { noremap = true, silent = true })
 
 -- Remove search highlight
-vim.keymap.set('n', '<leader>hd', '<cmd>nohl<CR>', { desc = 'Remove search highlight' })
+vim.keymap.set("n", "<leader>hd", "<cmd>nohl<CR>", { desc = "Remove search highlight" })
 
 -- Open the Desktop folder
-vim.keymap.set('n', '<leader>gx', ':!xdg-open "$HOME/Desktop"<CR>', { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>gx", ':!xdg-open "$HOME/Desktop"<CR>', { noremap = true, silent = true })
 
 -- Format python code
 vim.keymap.set("n", "<leader>gp", ":silent !black %<cr>")

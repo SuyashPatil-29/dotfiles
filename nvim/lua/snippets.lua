@@ -9,7 +9,7 @@ _G.insert_cpp_template = function()
     "int main(){",
     "",
     "  return 0;",
-    "}"
+    "}",
   }
 
   for _, line in ipairs(lines) do
@@ -17,5 +17,4 @@ _G.insert_cpp_template = function()
   end
 end
 
-vim.api.nvim_set_keymap('n', 'cpp', ':lua insert_cpp_template()<CR>', { noremap = true, silent = true })
-
+vim.api.nvim_set_keymap("n", "cpp", ":lua insert_cpp_template()<CR>", { noremap = true, silent = true })

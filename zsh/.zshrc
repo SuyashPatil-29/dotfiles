@@ -1,9 +1,3 @@
-# Make a directory called zsh in your home/user example home/suyash/zsh or ~/zsh
-# Add both the optionrc and pluginrc files to that directory 
-# Then add the following to your .zshrc file
-# source ~/zsh/.zshrc
-#Dont forget to change the value of OPENAI_API_KEY in the .zshrc file (current file)
-
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=110000
@@ -143,14 +137,7 @@ mkdirg ()
 export XDG_DATA_DIRS="$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:/home/suyash/.local/share/flatpak/exports/share"
 export PATH="/usr/local/go/bin:$PATH"
 export PATH="$PATH:$HOME/.local/bin"
-# pnpm
-export PNPM_HOME="/home/suyash/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-export OPENAI_API_KEY="Your openai api key"
+export OPENAI_API_KEY="Your OpenAI API Key"
 
 eval "$(atuin init zsh)"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
@@ -161,3 +148,10 @@ eval "$(zoxide init zsh)"
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
+# pnpm
+export PNPM_HOME="/home/suyash/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

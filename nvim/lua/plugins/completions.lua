@@ -44,6 +44,7 @@ return {
       EnumMember = "",
       Constant = "󰏿",
       Struct = "",
+      Supermaven = " ",
       Event = "",
       Operator = "󰆕",
       TypeParameter = "󰅲",
@@ -95,7 +96,7 @@ return {
         documentation = cmp.config.window.bordered(),
       },
       sources = {
-        { name = "copilot" },
+        { name = "supermaven" },
         { name = "nvim_lsp" },
         { name = "nvim_lua" },
         { name = "luasnip" },
@@ -117,7 +118,7 @@ return {
             vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind)
             -- Source
             vim_item.menu = ({
-              copilot = "[Copilot]",
+              supermaven = "[ ]",
               nvim_lsp = "[LSP]",
               nvim_lua = "[Lua]",
               luasnip = "[LuaSnip]",

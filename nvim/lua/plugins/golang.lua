@@ -10,9 +10,9 @@ return {
     },
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
-      vim.notify = require("notify")
+      vim.notify = require "notify"
 
-      require("go").setup({
+      require("go").setup {
         capabilities = capabilities,
         -- lsp_on_attach = require("plugins.lsp.on_attach").on_attach,
         lsp_cfg = {
@@ -55,10 +55,10 @@ return {
         },
         luasnip = true,
         trouble = true,
-      })
+      }
     end,
     event = { "CmdlineEnter" },
-    ft = {"go", "gomod"},
+    ft = { "go", "gomod" },
     build = ':lua require("go.install").update_all_sync()',
   },
 }

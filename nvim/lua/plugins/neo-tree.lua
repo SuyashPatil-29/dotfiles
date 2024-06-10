@@ -1,8 +1,3 @@
--- TODO
-
--- references:
--- https://github.com/nvim-neo-tree/neo-tree.nvim
--- https://github.com/nvim-neo-tree/neo-tree.nvim/wiki/Recipes
 return {
   "nvim-neo-tree/neo-tree.nvim",
   dependencies = {
@@ -16,7 +11,7 @@ return {
     { "<leader><tab>", ":Neotree toggle left<CR>",  silent = true, desc = "Left File Explorer" },
   },
   config = function()
-    require("neo-tree").setup({
+    require("neo-tree").setup {
       close_if_last_window = true,
       popup_border_style = "single",
       enable_git_status = true,
@@ -56,7 +51,7 @@ return {
       },
       window = {
         position = "float",
-        width = 40,
+        width = 35,
       },
       filesystem = {
         use_libuv_file_watcher = true,
@@ -72,12 +67,20 @@ return {
           },
         },
       },
+      source_selector = {
+        winbar = true,
+        sources = {
+          { source = "filesystem", display_name = "   Files " },
+          { source = "buffers", display_name = "   Bufs " },
+          { source = "git_status", display_name = "   Git " },
+        },
+      },
       event_handlers = {
         {
           event = "neo_tree_window_after_open",
           handler = function(args)
             if args.position == "left" or args.position == "right" then
-              vim.cmd("wincmd =")
+              vim.cmd "wincmd ="
             end
           end,
         },
@@ -85,12 +88,11 @@ return {
           event = "neo_tree_window_after_close",
           handler = function(args)
             if args.position == "left" or args.position == "right" then
-              vim.cmd("wincmd =")
+              vim.cmd "wincmd ="
             end
           end,
         },
       },
-    })
+    }
   end,
 }
-

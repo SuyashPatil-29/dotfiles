@@ -1,14 +1,24 @@
 #! /bin/sh
+# refer https://cravencode.com/post/essentials/enable-tap-to-click-in-i3wm/ to use natural scrolling and tap to enter
 
 pgrep -x sxhkd > /dev/null || sxhkd &
+cd ~/.config/polybar/ && ./bspwmpolybar.sh &
 
-# use feh to set wallpaper in bspwm
-feh --bg-scale ~/backgrounds/nice-blue-background.png &
+picom &
 
-bspc monitor -d I II III IV V VI VII VIII IX X
+feh --bg-fill ~/backgrounds/nice-blue-background.png
+
+bspc monitor -d 1 2 3 4 5 6 7 8 9 0
 
 bspc config border_width         2
 bspc config window_gap          12
+bspc config normal_border_color   "#b16286"
+bspc config active_border_color   "#d65d0e"
+bspc config focused_border_color  "#98971a"
+bspc config presel-feedback_color "#d65d0e"
+
+bspc config focus_follows_pointer  true
+bspc config pointer_follows_focus  true
 
 bspc config split_ratio          0.52
 bspc config borderless_monocle   true

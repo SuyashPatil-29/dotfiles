@@ -26,7 +26,11 @@ return {
     }
 
     require("mason-lspconfig").setup {
-      ensure_installed = { "tailwindcss", "html" },
+      ensure_installed = { "tailwindcss", "html", "clangd" },
+    }
+
+    require("lspconfig").clangd.setup {
+      cmd = { "clangd", "--client-encoding=utf-8" },
     }
 
     require("lspconfig.ui.windows").default_options.border = "single"

@@ -1,4 +1,12 @@
 return {
+  jsonls = {
+    settings = {
+      json = {
+        schema = require("schemastore").json.schemas(),
+        validate = { enable = true },
+      },
+    },
+  },
   lua_ls = {
     settings = {
       Lua = {
@@ -25,23 +33,18 @@ return {
   bashls = {
     filetypes = { "sh", "zsh" },
   },
-  clangd = {
-    offsetEncodingFilter = nil,
-  },
-  jdtls = {
-    filetypes = { "java" },
-  },
-  pyright = {
-    filetypes = {"py"}
-  },
-  gopls = {},
   vimls = {
     filetypes = { "vim" },
   },
-  omnisharp = {},
   tsserver = {},
+  gopls = {},
+  pyright = {},
   yamlls = {
     cmd = { "yaml-language-server", "--stdio" },
     filetypes = { "yaml" },
+  },
+  clangd = {
+    filetypes = { "c", "cpp", "objc", "objcpp" },
+    file_encodings = { "utf-8" },
   },
 }

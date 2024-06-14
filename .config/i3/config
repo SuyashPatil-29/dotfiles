@@ -15,9 +15,11 @@ for_window [class="^.*"] border pixel 1
 set $mod Mod4
 # set $mod Mod1
 
+# wallpaper
+set $wallpaper ~/backgrounds/mountains.png
 
 exec --no-startup-id picom
-exec_always --no-startup-id feh --bg-scale ~/backgrounds/nice-blue-background.png
+exec_always --no-startup-id feh --bg-scale $wallpaper
 exec_always --no-startup-id setxkbmap -option ctrl:nocaps
 exec_always --no-startup-id ~/.scripts/inverse-scroll.sh
 exec_always --no-startup-id ~/.scripts/tap-to-click.sh
@@ -177,9 +179,6 @@ set $whatsapp whatsie
 exec --no-startup-id i3-msg "workspace $ws1; exec $term"
 # Open brave on workspace 2
 exec --no-startup-id i3-msg "workspace $ws2; exec $browser"
-# Open whatsapp on workspace 3
-exec --no-startup-id i3-msg "workspace $ws3; exec $whatsapp"
-
 # # Open discord on workspace 3
 # exec --no-startup-id i3-msg "workspace $ws3; exec $discord"
 # # Open whatsapp on workspace 4

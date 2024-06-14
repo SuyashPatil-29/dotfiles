@@ -15,11 +15,15 @@ for_window [class="^.*"] border pixel 1
 set $mod Mod4
 # set $mod Mod1
 
+
 exec --no-startup-id picom
 exec_always --no-startup-id feh --bg-scale ~/backgrounds/nice-blue-background.png
 exec_always --no-startup-id setxkbmap -option ctrl:nocaps
 exec_always --no-startup-id ~/.scripts/inverse-scroll.sh
 exec_always --no-startup-id ~/.scripts/tap-to-click.sh
+
+bindsym $mod+Shift+p exec bash ~/.scripts/restart.sh
+bindsym $mod+Shift+w exec bash ~/.scripts/rofi-wifi-menu.sh
 
 # kill any hanging polybar processes
 exec_always killall polybar
@@ -29,7 +33,11 @@ exec_always --no-startup-id ~/.config/polybar/launchpoly.sh
 bindsym Print exec flameshot gui 
 
 # Lock
-bindsym alt+Shift+x exec betterlockscreen -l
+bindsym $mod+Shift+x exec betterlockscreen -l
+exec --no-startup-id betterlockscreen -w dim
+
+# Alternative (set last used background)
+exec --no-startup-id source ~/.fehbg
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -68,6 +76,9 @@ floating_modifier $mod
 
 # start a terminal
 bindsym $mod+Return exec kitty
+
+# start brave
+bindsym Mod4+Shift+b exec brave-browser
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -157,6 +168,23 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
+set $term kitty
+set $browser brave-browser
+set $discord discord
+set $whatsapp whatsie
+
+# Open kitty on workspace 1
+exec --no-startup-id i3-msg "workspace $ws1; exec $term"
+# Open brave on workspace 2
+exec --no-startup-id i3-msg "workspace $ws2; exec $browser"
+# Open whatsapp on workspace 3
+exec --no-startup-id i3-msg "workspace $ws3; exec $whatsapp"
+
+# # Open discord on workspace 3
+# exec --no-startup-id i3-msg "workspace $ws3; exec $discord"
+# # Open whatsapp on workspace 4
+# exec --no-startup-id i3-msg "workspace $ws4; exec $whatsapp"
+
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -223,12 +251,12 @@ set $crust     #11111b
 set $border    #d4be98
 
 # target                 title     bg      text    indicator  border
-client.focused           #83a598   #83a598 #ebdbb2 #83a598    #d5c4a1 
+client.focused           #83a598   #83a598 #ebdbb2 #83a598    #d65d0e
 client.focused_inactive  #d5c4a1   #d5c4a1 #282828 #d5c4a1    #83a598
-client.unfocused         #333333   #222222 #888888 #292d2e    #222222
+client.unfocused         #333333   #222222 #888888 #292d2e    #98971a
 client.urgent            #2f343a   #900000 #ffffff #900000    #900000
-client.placeholder       #000000   #0c0c0c #ffffff #000000    #0c0c0c 
-client.background        $base
+client.placeholder       #000000   #0c0c0c #ffffff #000000    #0c0c0c
+client.background        #181818
 
 # add gaps between windows
 # Set inner/outer gaps

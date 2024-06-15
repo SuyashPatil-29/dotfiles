@@ -90,7 +90,7 @@ return {
           show_buffer_close_icons = true,
           show_close_icon = true,
           max_name_length = 18,
-          max_prefix_length = 15,   -- prefix used when a buffer is de-duplicated
+          max_prefix_length = 15, -- prefix used when a buffer is de-duplicated
           tab_size = 15,
           diagnostics = "nvim_lsp", -- Display diagnostics in the bufferline
           left_trunc_marker = "",
@@ -220,8 +220,8 @@ return {
   {
     "ggandor/leap.nvim",
     keys = {
-      { "s",  mode = { "n", "x", "o" }, desc = "Leap forward to" },
-      { "S",  mode = { "n", "x", "o" }, desc = "Leap backward to" },
+      { "s", mode = { "n", "x", "o" }, desc = "Leap forward to" },
+      { "S", mode = { "n", "x", "o" }, desc = "Leap backward to" },
       { "gs", mode = { "n", "x", "o" }, desc = "Leap from windows" },
     },
     config = function(_, opts)

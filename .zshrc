@@ -43,6 +43,10 @@ alias dotfiles='cd ~/Desktop/dotfiles/'
 alias nvim-adib="NVIM_APPNAME=nvim-adib nvim"
 alias countlines="tokei ."
 alias ta="tmux attach"
+##install logo-ls from https://terminalroot.com/install-a-ls-command-that-shows-file-icons/
+# alias ls="logo-ls"
+##https://www.omgubuntu.co.uk/2017/07/add-bling-ls-bash-command-colorls
+# alias ls="colorls -r --group-directories-first --color=always"
 
 # Replace batcat with cat on Fedora as batcat is not available as a RPM in any form
 if command -v lsb_release > /dev/null; then
@@ -156,7 +160,6 @@ wifi_disconnect() {
 export XDG_DATA_DIRS="$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:/home/suyash/.local/share/flatpak/exports/share"
 export PATH="/usr/local/go/bin:$PATH"
 export PATH="$PATH:$HOME/.local/bin"
-export OPENAI_API_KEY="Your OpenAI API KEY"
 export PATH="/usr/bin/git:$PATH"
 export PATH="/usr/bin/curl:$PATH"
 
@@ -180,3 +183,9 @@ esac
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# Source the Lazyman shell initialization for aliases and nvims selector
+# shellcheck source=.config/nvim-Lazyman/.lazymanrc
+[ -f ~/.config/nvim-Lazyman/.lazymanrc ] && source ~/.config/nvim-Lazyman/.lazymanrc
+# Source the Lazyman .nvimsbind for nvims key binding
+# shellcheck source=.config/nvim-Lazyman/.nvimsbind
+[ -f ~/.config/nvim-Lazyman/.nvimsbind ] && source ~/.config/nvim-Lazyman/.nvimsbind

@@ -170,6 +170,29 @@ return {
     end,
   },
 
+  {
+    "echasnovski/mini.indentscope",
+    version = false,
+    event = "VeryLazy",
+    config = function()
+      require("mini.indentscope").setup()
+    end,
+  },
+
+  {
+    "echasnovski/mini.animate",
+    version = false,
+    event = "VeryLazy",
+    config = function()
+      require("mini.animate").setup {
+        cursor = {
+          -- Whether to enable this animation
+          enable = false,
+        },
+      }
+    end,
+  },
+
   -- Lorem Ipsum generator for Neovim
   {
     "derektata/lorem.nvim",
@@ -422,5 +445,33 @@ return {
     build = function()
       vim.fn["mkdp#util#install"]()
     end,
+  },
+
+  -- CMP for npm
+
+  {
+    "David-Kunz/cmp-npm",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    ft = "json",
+    config = function()
+      require("cmp-npm").setup {}
+    end,
+  },
+
+  -- Feature rich go devlopment environment
+
+  {
+    "ray-x/go.nvim",
+    dependencies = { -- optional packages
+      "ray-x/guihua.lua",
+      "neovim/nvim-lspconfig",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = function()
+      require("go").setup()
+    end,
+    event = { "CmdlineEnter" },
+    ft = { "go", "gomod" },
+    build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
   },
 }

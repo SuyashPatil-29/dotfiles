@@ -9,6 +9,11 @@ return {
     -- Adds LSP completion capabilities
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-path",
+    "hrsh7th/cmp-cmdline",
+    "hrsh7th/cmp-buffer",
+    "hrsh7th/cmp-calc",
+    "hrsh7th/nvim-cmp",
+    "hrsh7th/cmp-nvim-lsp",
     -- Adds a number of user-friendly snippets
     "rafamadriz/friendly-snippets",
     -- Adds vscode-like pictograms
@@ -17,6 +22,21 @@ return {
   },
   config = function()
     local cmp = require "cmp"
+
+    cmp.setup.cmdline(":", {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = cmp.config.sources({
+        { name = "path" },
+      }, {
+        {
+          name = "cmdline",
+          option = {
+            ignore_cmds = { "Man", "!" },
+          },
+        },
+      }),
+    })
+
     local luasnip = require "luasnip"
     local kind_icons = {
       Text = "",

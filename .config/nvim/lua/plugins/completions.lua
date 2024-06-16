@@ -6,21 +6,18 @@ return {
     -- Snippet Engine & its associated nvim-cmp source
     "L3MON4D3/LuaSnip",
     "saadparwaiz1/cmp_luasnip",
-
     -- Adds LSP completion capabilities
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-path",
-
     -- Adds a number of user-friendly snippets
     "rafamadriz/friendly-snippets",
-
     -- Adds vscode-like pictograms
     "onsails/lspkind.nvim",
+    "js-everts/cmp-tailwind-colors",
   },
   config = function()
     local cmp = require "cmp"
     local luasnip = require "luasnip"
-
     local kind_icons = {
       Text = "",
       Method = "󰆧",
@@ -51,7 +48,6 @@ return {
     }
     require("luasnip.loaders.from_vscode").lazy_load()
     luasnip.config.setup {}
-
     cmp.setup {
       snippet = {
         expand = function(args)
@@ -96,6 +92,7 @@ return {
         documentation = cmp.config.window.bordered(),
       },
       sources = {
+        { name = "tailwindcss-colorizer-cmp" }, -- Add this line to prioritize tailwindcss-colorizer-cmp
         { name = "supermaven" },
         { name = "nvim_lsp" },
         { name = "nvim_lua" },
@@ -110,26 +107,16 @@ return {
       },
       formatting = {
         expandable_indicator = true,
-        fields = { "kind", "abbr", "menu" },
-        format = function(entry, vim_item)
-          local lspkind_ok, lspkind = pcall(require, "lspkind")
-          if not lspkind_ok then
-            -- From kind_icons array
-            vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind)
-            -- Source
-            vim_item.menu = ({
-              supermaven = "[ ]",
-              nvim_lsp = "[LSP]",
-              nvim_lua = "[Lua]",
-              luasnip = "[LuaSnip]",
-              buffer = "[Buffer]",
-              latex_symbols = "[LaTeX]",
-            })[entry.source.name]
-            return vim_item
-          else
-            -- From lspkind
-            return lspkind.cmp_format()(entry, vim_item)
+        fields = { "abbr", "kind", "menu" },
+        format = function(entry, item)
+          item.menu = item.kind
+          item = require("cmp-tailwind-colors").format(entry, item)
+          if kind_icons[item.kind] then
+            item.kind = kind_icons[item.kind] .. "  "
           end
+          item.abbr = item.abbr .. "  " -- Add two spaces after the abbreviation
+          item.menu = "  " .. item.menu -- Add two spaces before the menu
+          return item
         end,
       },
     }

@@ -21,6 +21,9 @@ return {
         },
       },
     }
+
+    local util = require "lspconfig/util"
+
     require("mason-lspconfig").setup {
       ensure_installed = vim.tbl_keys(require "plugins.lsp.servers"),
     }
@@ -31,6 +34,31 @@ return {
 
     require("lspconfig").clangd.setup {
       cmd = { "clangd", "--client-encoding=utf-8" },
+    }
+
+    require("lspconfig").gopls.setup {
+      cmd = { "gopls" },
+      filetypes = { "go", "gomod", "gowork", "gotmpl" },
+      root_dir = util.root_pattern("go.mod", "go.work", "git"),
+      settings = {
+        gopls = {
+          compeleteUnimported = true,
+          usePlaceholders = true,
+          analyses = {
+            unusedparams = true,
+            unreachable = true,
+            unusedvars = true,
+            ineffassign = true,
+            nilerr = true,
+            misspell = true,
+            typecheck = true,
+            errcheck = true,
+            staticcheck = true,
+            gosimple = true,
+            scopelint = true,
+          },
+        },
+      },
     }
 
     require("lspconfig.ui.windows").default_options.border = "single"

@@ -37,7 +37,10 @@ return {
     filetypes = { "vim" },
   },
   tsserver = {},
-  gopls = {},
+  gopls = {
+    completeUnimported = true,
+    usePlaceholders = true,
+  },
   pyright = {},
   yamlls = {
     cmd = { "yaml-language-server", "--stdio" },

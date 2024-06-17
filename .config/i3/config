@@ -36,7 +36,7 @@ bindsym Print exec flameshot gui
 
 # Lock
 bindsym $mod+Shift+x exec betterlockscreen -l blur
-exec --no-startup-id betterlockscreen -w blur
+exec --no-startup-id betterlockscreen -w dim
 
 # Alternative (set last used background)
 exec --no-startup-id source ~/.fehbg

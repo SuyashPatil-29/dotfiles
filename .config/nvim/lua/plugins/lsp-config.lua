@@ -84,7 +84,6 @@ return {
     }
 
     -- Python environment
-    local util = require "lspconfig/util"
     local path = util.path
     require("lspconfig").pyright.setup {
       on_attach = require("plugins.lsp.on_attach").on_attach,

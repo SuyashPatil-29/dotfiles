@@ -61,14 +61,11 @@ return {
           formatting.stylua,
           formatting.prettier,
           formatting.gofumpt,
+          formatting.goimports_reviser,
+          formatting.golines,
           formatting.buf,
           formatting.black,
 
-          -- diagnosticsueslint_d.with({ -- js/ts linter
-          --   condition = function(utils)
-          --     return utils.root_has_file({ ".eslintrc.js", ".eslintrc.cjs" }) -- only enable if root has .eslintrc.js or .eslintrc.cjs
-          --   end,
-          -- }),
           diagnostics.golangci_lint,
 
           code_actions.gitsigns,

@@ -40,6 +40,17 @@ return {
   gopls = {
     completeUnimported = true,
     usePlaceholders = true,
+    analyses = {
+      unusedparams = true,
+      unreachable = true,
+      unusedvars = true,
+      ineffassign = true,
+      nilerr = true,
+      predeclared = true,
+      typecheck = true,
+      varcheck = true,
+      staticcheck = true,
+    },
   },
   pyright = {},
   yamlls = {

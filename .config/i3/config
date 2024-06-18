@@ -23,6 +23,7 @@ exec_always --no-startup-id feh --bg-scale $wallpaper
 exec_always --no-startup-id setxkbmap -option ctrl:nocaps
 exec_always --no-startup-id ~/.scripts/inverse-scroll.sh
 exec_always --no-startup-id ~/.scripts/tap-to-click.sh
+exec_always --no-startup-id ~/.scripts/alternating_layouts.py
 
 bindsym $mod+Shift+p exec bash ~/.scripts/restart.sh
 bindsym $mod+Shift+w exec bash ~/.scripts/rofi-wifi-menu.sh
@@ -36,7 +37,7 @@ bindsym Print exec flameshot gui
 
 # Lock
 bindsym $mod+Shift+x exec betterlockscreen -l blur
-exec --no-startup-id betterlockscreen -w dim
+exec --no-startup-id betterlockscreen -w
 
 # Alternative (set last used background)
 exec --no-startup-id source ~/.fehbg

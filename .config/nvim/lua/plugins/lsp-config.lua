@@ -23,6 +23,7 @@ return {
     }
 
     local util = require "lspconfig/util"
+    local configs = require "lspconfig/configs"
 
     require("mason-lspconfig").setup {
       ensure_installed = vim.tbl_keys(require "plugins.lsp.servers"),

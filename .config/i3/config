@@ -18,7 +18,7 @@ set $mod Mod4
 # wallpaper
 set $wallpaper ~/backgrounds/mountains.png
 
-exec --no-startup-id picom
+exec --no-startup-id picom --experimental-backend
 exec_always --no-startup-id feh --bg-scale $wallpaper
 exec_always --no-startup-id setxkbmap -option ctrl:nocaps
 exec_always --no-startup-id ~/.scripts/inverse-scroll.sh

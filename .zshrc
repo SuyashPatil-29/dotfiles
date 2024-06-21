@@ -36,13 +36,16 @@ alias nvconf="nvim ~/.config/nvim/"
 alias kconf="nvim ~/.config/kitty/kitty.conf"
 alias tconf="nvim ~/.tmux.conf"
 alias zconf="nvim ~/.zshrc"
-alias tkill="tmux kill-session -t"
-alias tlist="tmux list-sessions"
-alias tattach="tmux attach"
 alias dotfiles='cd ~/Desktop/dotfiles/'
 alias nvim-adib="NVIM_APPNAME=nvim-adib nvim"
 alias countlines="tokei ."
+alias tattach="tmux attach"
 alias ta="tmux attach"
+alias tkill="tmux kill-session -t"
+alias tl="tmux list-sessions"
+alias brightup="sudo brightnessctl set +10%"
+alias brightdown="sudo brightnessctl set 10%-"
+
 ##install logo-ls from https://terminalroot.com/install-a-ls-command-that-shows-file-icons/
 # alias ls="logo-ls"
 ##https://www.omgubuntu.co.uk/2017/07/add-bling-ls-bash-command-colorls

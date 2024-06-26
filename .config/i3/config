@@ -27,6 +27,7 @@ exec_always --no-startup-id ~/.scripts/alternating_layouts.py
 
 bindsym $mod+Shift+p exec bash ~/.scripts/restart.sh
 bindsym $mod+Shift+w exec bash ~/.scripts/rofi-wifi-menu.sh
+bindsym $mod+b exec --no-startup-id bash ~/.scripts/rofi-bluetooth.sh
 
 # kill any hanging polybar processes
 exec_always killall polybar

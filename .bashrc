@@ -675,17 +675,6 @@ export PATH=$PATH:"$HOME/.local/bin:$HOME/.cargo/bin:/var/lib/flatpak/exports/bi
 
 eval "$(starship init bash)"
 
-#Autojump
-
-if [ -f "/usr/share/autojump/autojump.sh" ]; then
-	. /usr/share/autojump/autojump.sh
-elif [ -f "/usr/share/autojump/autojump.bash" ]; then
-	. /usr/share/autojump/autojump.bash
-else
-	echo "can't found the autojump script"
-fi
-
-eval "$(starship init bash)"
 export XDG_DATA_DIRS="$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:/home/suyash/.local/share/flatpak/exports/share"
 export XDG_DATA_DIRS="$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:/home/suyash/.local/share/flatpak/exports/share"
 eval "$(zoxide init bash)"
@@ -697,11 +686,6 @@ export PATH="$PATH:/path/to/eslint_d/bin"
 #Go
 export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$HOME/go
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH=$BUN_INSTALL/bin:$PATH
-
 
 #alias 
 alias c="clear"
@@ -731,10 +715,6 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 
-# alias pnpx = "pnpm dlx"
-# pnpm end
-
-
 #c++ for cp
 alias compile='function _compile() { g++ "$1" -o "${1%.*}" && ./"${1%.*}" && rm -f "${1%.*}" 2>/dev/null; }; _compile'
 
@@ -762,18 +742,6 @@ jrun() {
     # Remove the compiled .class file, suppressing the "trash" message
     rm "$filename.class" > /dev/null 2>&1
 }
-
-#Fly.io cli
-export FLYCTL_INSTALL="/home/suyash/.fly"
-export PATH="$FLYCTL_INSTALL/bin:$PATH"
-
-#create next app with Bun
-alias cna='bunx create-next-app@latest $1'
-alias tf="$(thefuck --alias)"
-
-#Tmuxifier path
-export PATH="$HOME/.tmuxifier/bin:$PATH"
-eval "$(tmuxifier init -)"
 
 alias tn="tmux new -As \$(basename \$(pwd))"
 

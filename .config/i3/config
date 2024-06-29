@@ -29,6 +29,8 @@ bindsym $mod+Shift+p exec bash ~/.scripts/restart.sh
 bindsym $mod+Shift+w exec bash ~/.scripts/rofi-wifi-menu.sh
 bindsym $mod+b exec --no-startup-id bash ~/.scripts/rofi-bluetooth.sh
 
+bindsym $mod+Shift+f exec --no-startup-id copyq show
+
 # kill any hanging polybar processes
 exec_always killall polybar
 exec_always --no-startup-id ~/.config/polybar/launchpoly.sh
@@ -91,6 +93,8 @@ bindsym $mod+Shift+q kill
 bindsym $mod+space exec --no-startup-id rofi -show drun
 # bindsym $mod+space exec --no-startup-id rofi -show combi
 bindsym $mod+Tab exec --no-startup-id rofi -show window
+
+bindsym $mod+Shift+v exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}'
 
 bindsym $mod+d exec dmenu_run
 

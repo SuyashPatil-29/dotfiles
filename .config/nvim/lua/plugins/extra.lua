@@ -185,9 +185,29 @@ return {
     event = "VeryLazy",
     config = function()
       require("mini.animate").setup {
+        -- Cursor path
         cursor = {
-          -- Whether to enable this animation
           enable = false,
+        },
+
+        -- Vertical scroll
+        scroll = {
+          enable = false,
+        },
+
+        -- Window resize
+        resize = {
+          enable = true,
+        },
+
+        -- Window open
+        open = {
+          enable = true,
+        },
+
+        -- Window close
+        close = {
+          enable = true,
         },
       }
     end,
@@ -448,15 +468,6 @@ return {
   },
 
   -- CMP for npm
-
-  {
-    "David-Kunz/cmp-npm",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    ft = "json",
-    config = function()
-      require("cmp-npm").setup {}
-    end,
-  },
 
   -- Feature rich go devlopment environment
 

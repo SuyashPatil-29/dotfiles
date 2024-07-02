@@ -18,7 +18,7 @@ set $mod Mod4
 # wallpaper
 set $wallpaper ~/backgrounds/mountains.png
 
-exec --no-startup-id picom --experimental-backend
+exec_always --no-startup-id picom --experimental-backend
 exec_always --no-startup-id greenclip daemon &
 
 exec_always --no-startup-id feh --bg-scale $wallpaper
@@ -30,8 +30,6 @@ exec_always --no-startup-id ~/.scripts/alternating_layouts.py
 bindsym $mod+Shift+p exec bash ~/.scripts/restart.sh
 bindsym $mod+Shift+w exec bash ~/.scripts/rofi-wifi-menu.sh
 bindsym $mod+b exec --no-startup-id bash ~/.scripts/rofi-bluetooth.sh
-
-bindsym $mod+Shift+f exec --no-startup-id copyq show
 
 # kill any hanging polybar processes
 exec_always killall polybar

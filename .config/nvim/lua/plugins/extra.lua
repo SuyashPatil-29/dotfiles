@@ -20,12 +20,6 @@ return {
     end,
   },
 
-  -- comments
-  {
-    "numToStr/Comment.nvim",
-    opts = {},
-    lazy = false,
-  },
   -- useful when there are embedded languages in certain types of files (e.g. Vue or React)
   { "joosepalviste/nvim-ts-context-commentstring", lazy = true },
 
@@ -36,6 +30,57 @@ return {
     opts = {},
     config = function()
       require("dressing").setup()
+    end,
+  },
+
+  -- Oil is a new way to edit your files
+
+  {
+    "stevearc/oil.nvim",
+    opts = {},
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("oil").setup {
+        default_file_explorer = false,
+        delete_to_trash = true,
+        skip_confirm_for_simple_edits = true,
+        view_options = {
+          show_hidden = true,
+          natural_order = true,
+          is_always_hidden = function(name, _)
+            return name == ".." or name == ".git"
+          end,
+        },
+        float = {
+          padding = 2,
+          max_width = 90,
+          max_height = 0,
+        },
+        win_options = {
+          wrap = true,
+          winblend = 0,
+        },
+        keymaps = {
+          ["C-s"] = false,
+          ["<C-c>"] = false,
+          ["<leader>c"] = "actions.close",
+          ["g?"] = "actions.show_help",
+          ["<CR>"] = "actions.select",
+          ["<C-v>"] = { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" },
+          ["<C-h>"] = { "actions.select", opts = { horizontal = true }, desc = "Open the entry in a horizontal split" },
+          ["<C-t>"] = { "actions.select", opts = { tab = true }, desc = "Open the entry in new tab" },
+          ["<C-p>"] = "actions.preview",
+          ["<C-l>"] = "actions.refresh",
+          ["-"] = "actions.parent",
+          ["_"] = "actions.open_cwd",
+          ["`"] = "actions.cd",
+          ["~"] = { "actions.cd", opts = { scope = "tab" }, desc = ":tcd to the current oil directory" },
+          ["gs"] = "actions.change_sort",
+          ["gx"] = "actions.open_external",
+          ["g."] = "actions.toggle_hidden",
+          ["g\\"] = "actions.toggle_trash",
+        },
+      }
     end,
   },
 
@@ -90,7 +135,7 @@ return {
           show_buffer_close_icons = true,
           show_close_icon = true,
           max_name_length = 18,
-          max_prefix_length = 15,   -- prefix used when a buffer is de-duplicated
+          max_prefix_length = 15, -- prefix used when a buffer is de-duplicated
           tab_size = 15,
           diagnostics = "nvim_lsp", -- Display diagnostics in the bufferline
           left_trunc_marker = "",
@@ -263,8 +308,8 @@ return {
   {
     "ggandor/leap.nvim",
     keys = {
-      { "s",  mode = { "n", "x", "o" }, desc = "Leap forward to" },
-      { "S",  mode = { "n", "x", "o" }, desc = "Leap backward to" },
+      { "s", mode = { "n", "x", "o" }, desc = "Leap forward to" },
+      { "S", mode = { "n", "x", "o" }, desc = "Leap backward to" },
       { "gs", mode = { "n", "x", "o" }, desc = "Leap from windows" },
     },
     config = function(_, opts)

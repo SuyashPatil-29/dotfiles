@@ -237,8 +237,7 @@ return {
       end, { desc = "Color Picker" })
 
       vim.keymap.set("n", "<C-p>", builtin.find_files, {})
-      vim.keymap.set("n", "<leader>lg", builtin.live_grep, {desc = "Open live grep"})
-      vim.keymap.set("n", "<C-o>", builtin.buffers, { desc = "Find Buffers" })
+      vim.keymap.set("n", "<leader>lg", builtin.live_grep, { desc = "Open live grep" })
 
       require("telescope").load_extension "ui-select"
 
@@ -254,18 +253,15 @@ return {
 
       -- Custom picker for tmux sessions
       local opts = {
-        finder = finders.new_oneshot_job(
-          { "tmux", "list-sessions", "-F", "#{session_name}" },
-          {
-            entry_maker = function(entry)
-              return {
-                value = entry,
-                display = entry,
-                ordinal = entry,
-              }
-            end,
-          }
-        ),
+        finder = finders.new_oneshot_job({ "tmux", "list-sessions", "-F", "#{session_name}" }, {
+          entry_maker = function(entry)
+            return {
+              value = entry,
+              display = entry,
+              ordinal = entry,
+            }
+          end,
+        }),
         sorter = sorters.get_generic_fuzzy_sorter {},
         attach_mappings = function(prompt_bufnr, map)
           map("i", "<CR>", switch_tmux_session)

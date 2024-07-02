@@ -37,6 +37,31 @@ return {
       cmd = { "clangd", "--client-encoding=utf-8" },
     }
 
+    require("lspconfig").tsserver.setup {
+      settings = {
+        typescript = {
+          inlayHints = {
+            includeInlayEnumMemberValueHints = true,
+            includeInlayFunctionLikeReturnTypeHints = true,
+            includeInlayParameterNameHints = "all",
+            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+            includeInlayPropertyDeclarationTypeHints = true,
+            includeInlayVariableTypeHints = true,
+          },
+        },
+        javascript = {
+          inlayHints = {
+            includeInlayEnumMemberValueHints = true,
+            includeInlayFunctionLikeReturnTypeHints = true,
+            includeInlayParameterNameHints = "all",
+            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+            includeInlayPropertyDeclarationTypeHints = true,
+            includeInlayVariableTypeHints = true,
+          },
+        },
+      },
+    }
+
     require("lspconfig").gopls.setup {
       cmd = { "gopls" },
       filetypes = { "go", "gomod", "gowork", "gotmpl" },

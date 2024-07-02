@@ -5,6 +5,14 @@ vim.keymap.set("n", "<leader>y", '"+y', { desc = 'Yank into " register' })
 vim.keymap.set("v", "<leader>y", '"+y<CR>gv', { desc = 'Yank into " register' })
 vim.keymap.set("n", "<leader>Y", '"+Y', { desc = 'Yank into " register' })
 
+-- inlay hints
+vim.keymap.set("n", "<leader>ih", function()
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end, { desc = "Toggle inlay hints" })
+
+-- Open Oil in float
+vim.keymap.set("n", "<leader>c", "<CMD>Oil<CR>", { desc = "Open Oil" })
+
 -- paste over currently selected text without yanking it
 vim.keymap.set("v", "p", '"_dp')
 vim.keymap.set("v", "P", '"_dP')

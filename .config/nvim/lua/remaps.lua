@@ -98,6 +98,14 @@ vim.api.nvim_set_keymap(
   { noremap = true, silent = true }
 )
 
+-- Go to next diagnostic
+vim.api.nvim_set_keymap(
+  "n",
+  "]d",
+  ":lua vim.diagnostic.goto_next({severity = vim.diagnostic.severity.WARN or vim.diagnostic.severity.INFO or vim.diagnostic.severity.HINT})<CR>zz",
+  { noremap = true, silent = true }
+)
+
 --Open Quickfix window
 vim.api.nvim_set_keymap("n", "<leader>q", ":copen<CR>", { noremap = true, silent = true })
 

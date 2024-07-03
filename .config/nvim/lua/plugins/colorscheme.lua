@@ -3,6 +3,6 @@ return {
   "folke/tokyonight.nvim",
   "rebelot/kanagawa.nvim",
   "sainnhe/gruvbox-material",
-  config = function()
-  end,
+  "Yazeed1s/oh-lucy.nvim",
+  config = function() end,
 }

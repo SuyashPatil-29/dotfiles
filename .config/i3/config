@@ -21,6 +21,8 @@ set $wallpaper ~/backgrounds/mountains.png
 exec_always --no-startup-id picom --experimental-backend
 exec_always --no-startup-id greenclip daemon &
 
+exec_always --no-startup-id ~/.scripts/alternating_layouts.py
+
 exec_always --no-startup-id feh --bg-scale $wallpaper
 exec_always --no-startup-id setxkbmap -option ctrl:nocaps
 exec_always --no-startup-id ~/.scripts/inverse-scroll.sh

@@ -178,9 +178,14 @@ esac
 # pnpm end
 
 # Lazy-load NVM for potential performance improvement
+export NVM_DIR="$HOME/.nvm"
+
+# Add the npm and node binaries to the PATH
+# Replace v14.17.0 with the version you have installed
+export PATH="$NVM_DIR/versions/node/v20.14.0/bin:$PATH"
+
 nvm() {
     unset -f nvm
-    export NVM_DIR="$HOME/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
     nvm "$@"

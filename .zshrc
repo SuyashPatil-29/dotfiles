@@ -6,12 +6,17 @@ SAVEHIST=100000
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/suyash/.zshrc'
 
+# Optimize compinit
 autoload -Uz compinit
-compinit
+if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+else
+  compinit -C
+fi
 # End of lines added by compinstall
 
-[ -f "${ZDOTDIR}/home/suyash/zsh/optionrc" ] && source "${ZDOTDIR}/home/suyash/zsh/optionrc"
-[ -f "${ZDOTDIR}/home/suyash/zsh/pluginrc" ] && source "${ZDOTDIR}/home/suyash/zsh/pluginrc"
+[ -f "${ZDOTDIR}/home/${USER}/zsh/optionrc" ] && source "${ZDOTDIR}/home/${USER}/zsh/optionrc"
+[ -f "${ZDOTDIR}/home/${USER}/zsh/pluginrc" ] && source "${ZDOTDIR}/home/${USER}/zsh/pluginrc"
 
 # Completion styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
@@ -62,7 +67,6 @@ if command -v lsb_release > /dev/null; then
     fi
 fi
 
-
 jrun() {
     # Check if a Java file is provided as an argument
     if [ $# -eq 0 ]; then
@@ -91,53 +95,43 @@ jrun() {
 alias whatismyip="whatsmyip"
 function whatsmyip ()
 {
-	# Dumps a list of all IP addresses for every device
-	# /sbin/ifconfig |grep -B1 "inet addr" |awk '{ if ( $1 == "inet" ) { print $2 } else if ( $2 == "Link" ) { printf "%s:" ,$1 } }' |awk -F: '{ print $1 ": " $3 }';
-	
-	### Old commands
-	# Internal IP Lookup
-	#echo -n "Internal IP: " ; /sbin/ifconfig eth0 | grep "inet addr" | awk -F: '{print $2}' | awk '{print $1}'
-#
-#	# External IP Lookup
-	#echo -n "External IP: " ; wget http://smart-ip.net/myip -O - -q
-	
-	# Internal IP Lookup.
-	if [ -e /sbin/ip ];
-	then
-		echo -n "Internal IP: " ; /sbin/ip addr show wlan0 | grep "inet " | awk -F: '{print $1}' | awk '{print $2}'
-	else
-		echo -n "Internal IP: " ; /sbin/ifconfig wlan0 | grep "inet " | awk -F: '{print $1} |' | awk '{print $2}'
-	fi
+    # Internal IP Lookup
+    if [ -e /sbin/ip ];
+    then
+        echo -n "Internal IP: " ; /sbin/ip addr show wlan0 | grep "inet " | awk -F: '{print $1}' | awk '{print $2}'
+    else
+        echo -n "Internal IP: " ; /sbin/ifconfig wlan0 | grep "inet " | awk -F: '{print $1} |' | awk '{print $2}'
+    fi
 
-	# External IP Lookup 
-	echo -n "External IP: " ; curl -s ifconfig.me
+    # External IP Lookup 
+    echo -n "External IP: " ; curl -s ifconfig.me
 }
 
 # Copy and go to the directory
 cpg ()
 {
-	if [ -d "$2" ];then
-		cp "$1" "$2" && cd "$2"
-	else
-		cp "$1" "$2"
-	fi
+    if [ -d "$2" ];then
+        cp "$1" "$2" && cd "$2"
+    else
+        cp "$1" "$2"
+    fi
 }
 
 # Move and go to the directory
 mvg ()
 {
-	if [ -d "$2" ];then
-		mv "$1" "$2" && cd "$2"
-	else
-		mv "$1" "$2"
-	fi
+    if [ -d "$2" ];then
+        mv "$1" "$2" && cd "$2"
+    else
+        mv "$1" "$2"
+    fi
 }
 
 # Create and go to the directory
 mkdirg ()
 {
-	mkdir -p "$1"
-	cd "$1"
+    mkdir -p "$1"
+    cd "$1"
 }
 
 # List all the available wifi networks using nmcli
@@ -183,12 +177,21 @@ case ":$PATH:" in
 esac
 # pnpm end
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# Lazy-load NVM for potential performance improvement
+nvm() {
+    unset -f nvm
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+    nvm "$@"
+}
+
 # Source the Lazyman shell initialization for aliases and nvims selector
 # shellcheck source=.config/nvim-Lazyman/.lazymanrc
 [ -f ~/.config/nvim-Lazyman/.lazymanrc ] && source ~/.config/nvim-Lazyman/.lazymanrc
 # Source the Lazyman .nvimsbind for nvims key binding
 # shellcheck source=.config/nvim-Lazyman/.nvimsbind
 [ -f ~/.config/nvim-Lazyman/.nvimsbind ] && source ~/.config/nvim-Lazyman/.nvimsbind
+
+# neofetch --ascii ~/.config/neofetch/ascii.txt
+# neofetch

@@ -9,11 +9,32 @@ local function configure_color_picker()
   local sorters = require "telescope.sorters"
 
   local all_colors = {
-    "catppuccin", "catppuccin-frappe", "catppuccin-latte", "catppuccin-macchiato",
-    "codemonkey", "catppuccin-mocha", "desert", "elflord", "evening", "habamax",
-    "industry", "koehler", "lunaperche", "murphy", "pablo", "peachpuff", "quiet",
-    "ron", "slate", "torte", "oh-lucy", "oh-lucy-evening", "onedark", "onedarker",
-    "onedarkest", "tokyonight",
+    "catppuccin",
+    "catppuccin-frappe",
+    "catppuccin-latte",
+    "catppuccin-macchiato",
+    "codemonkey",
+    "catppuccin-mocha",
+    "desert",
+    "elflord",
+    "evening",
+    "habamax",
+    "industry",
+    "koehler",
+    "lunaperche",
+    "murphy",
+    "pablo",
+    "peachpuff",
+    "quiet",
+    "ron",
+    "slate",
+    "torte",
+    "oh-lucy",
+    "oh-lucy-evening",
+    "onedark",
+    "onedarker",
+    "onedarkest",
+    "tokyonight",
   }
 
   local function enter(prompt_bufnr)
@@ -52,7 +73,9 @@ local function configure_color_picker()
   }
 
   local colors = pickers.new(opts)
-  vim.keymap.set("n", "<leader>cp", function() colors:find() end, { desc = "Color Picker" })
+  vim.keymap.set("n", "<leader>cp", function()
+    colors:find()
+  end, { desc = "Color Picker" })
 end
 
 -- Tmux Sessions Configuration
@@ -91,7 +114,9 @@ local function configure_tmux_sessions()
   }
 
   local tmux_sessions = pickers.new(opts)
-  vim.keymap.set("n", "<leader>ts", function() tmux_sessions:find() end, { desc = "Switch Tmux Sessions" })
+  vim.keymap.set("n", "<leader>ts", function()
+    tmux_sessions:find()
+  end, { desc = "Switch Tmux Sessions" })
 end
 
 -- Telescope Configuration
@@ -128,8 +153,15 @@ local function configure_telescope()
         preview_cutoff = 120,
       },
       vimgrep_arguments = {
-        "rg", "--color=never", "--no-heading", "--with-filename",
-        "--line-number", "--column", "--smart-case", "--hidden", "--glob=!.git/",
+        "rg",
+        "--color=never",
+        "--no-heading",
+        "--with-filename",
+        "--line-number",
+        "--column",
+        "--smart-case",
+        "--hidden",
+        "--glob=!.git/",
       },
     },
     pickers = {

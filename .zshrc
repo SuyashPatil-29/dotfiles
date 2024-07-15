@@ -6,6 +6,8 @@ SAVEHIST=100000
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/suyash/.zshrc'
 
+. "$HOME/.asdf/asdf.sh"
+
 # Optimize compinit
 autoload -Uz compinit
 if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
@@ -159,6 +161,9 @@ export PATH="/usr/local/go/bin:$PATH"
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="/usr/bin/git:$PATH"
 export PATH="/usr/bin/curl:$PATH"
+
+# This is for go tour locally
+export PATH=$PATH:~/go/bin
 
 eval "$(atuin init zsh)"
 eval "$(/home/homebrew/bin/brew shellenv)"

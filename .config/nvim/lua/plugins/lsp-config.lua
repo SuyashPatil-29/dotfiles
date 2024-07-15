@@ -74,6 +74,11 @@ return {
       else
         lsp_notify(client.name .. " LSP loaded", "info")
       end
+
+      -- Keybinding for go to definition
+      local opts = { noremap = true, silent = true }
+      vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+
       -- Your existing on_attach logic here
     end
 

@@ -7,6 +7,7 @@ local plugins = {
       },
     },
   },
+  -- Feature rich go devlopment environment
   {
     "ray-x/go.nvim",
     dependencies = { -- optional packages
@@ -31,8 +32,7 @@ local plugins = {
   {
     "jose-elias-alvarez/null-ls.nvim",
     ft = "go",
-    opts = function()
-    end,
+    opts = function() end,
   },
   {
     "olexsmir/gopher.nvim",

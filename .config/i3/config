@@ -86,7 +86,7 @@ floating_modifier $mod
 bindsym $mod+Return exec kitty
 
 # start brave
-bindsym Mod4+Shift+b exec brave-browser
+bindsym Mod4+Shift+b exec firefox
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -179,7 +179,7 @@ bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
 set $term kitty
-set $browser brave-browser
+set $browser firefox
 set $discord discord
 set $whatsapp whatsie
 
@@ -187,6 +187,9 @@ set $whatsapp whatsie
 exec --no-startup-id i3-msg "workspace $ws1; exec $term"
 # Open brave on workspace 2
 exec --no-startup-id i3-msg "workspace $ws2; exec $browser"
+# put me back on workspace 1
+exec --no-startup-id i3-msg "workspace $ws1"
+
 # # Open discord on workspace 3
 # exec --no-startup-id i3-msg "workspace $ws3; exec $discord"
 # # Open whatsapp on workspace 4

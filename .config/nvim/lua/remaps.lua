@@ -1,5 +1,9 @@
+-- Save current file with <leader>w
+vim.keymap.set("n", "<leader>w", ":w<CR>", { noremap = true, silent = true })
+
 -- Dismiss messages displayed by Noice
 vim.keymap.set("n", "<leader>nd", "<cmd>NoiceDismiss<CR>", { desc = "Dismiss Noice Message" })
+
 -- Copy text to " register
 vim.keymap.set("n", "<leader>y", '"+y', { desc = 'Yank into " register' })
 vim.keymap.set("v", "<leader>y", '"+y<CR>gv', { desc = 'Yank into " register' })
@@ -23,12 +27,8 @@ vim.keymap.set("n", "X", ":keeppatterns substitute/\\s*\\%#\\s*/\\r/e <bar> norm
 -- ctrl + x to cut full line
 vim.keymap.set("n", "<C-x>", "dd", { noremap = true, silent = true })
 
--- Delete text to " register
-vim.keymap.set("n", "<leader>d", '"_d', { desc = 'Delete into " register' })
-vim.keymap.set("v", "<leader>d", '"_d', { desc = 'Delete into " register' })
-
 -- Space + a to select all text
-vim.api.nvim_set_keymap("n", "<leader>a", "ggVG", { noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>a", "ggVG", { noremap = true, silent = true, desc = "Select all text" })
 
 -- Replace word under cursor across entire buffer
 vim.keymap.set(
@@ -113,7 +113,12 @@ vim.api.nvim_set_keymap("n", "<leader>q", ":copen<CR>", { noremap = true, silent
 vim.api.nvim_set_keymap("n", "<leader>qq", ":cclose<CR>", { noremap = true, silent = true })
 
 -- Delete everything on screen
-vim.api.nvim_set_keymap("n", "<leader>d", "ggVGd", { noremap = true, silent = true })
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>d",
+  "ggVGd",
+  { noremap = true, silent = true, desc = "Delete everything on screen" }
+)
 
 vim.api.nvim_set_keymap("n", "<A-Up>", ":m-2<CR>", { noremap = true, silent = true })
 

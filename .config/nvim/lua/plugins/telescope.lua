@@ -168,6 +168,7 @@ local function configure_telescope()
       find_files = {
         previewer = false,
         layout_config = { height = 0.4, prompt_position = "top", preview_cutoff = 120 },
+        find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" }, -- Make sure to include hidden files
       },
       git_files = {
         previewer = false,

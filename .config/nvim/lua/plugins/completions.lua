@@ -24,7 +24,43 @@ return {
     local cmp = require "cmp"
 
     cmp.setup.cmdline(":", {
-      mapping = cmp.mapping.preset.cmdline(),
+      mapping = cmp.mapping.preset.cmdline {
+        ["<Tab>"] = {
+          c = function()
+            if cmp.visible() then
+              cmp.close()
+            end
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-z>", true, true, true), "n", true)
+          end,
+        },
+        ["<S-Tab>"] = {
+          c = function()
+            if cmp.visible() then
+              cmp.close()
+            end
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-p>", true, true, true), "n", true)
+          end,
+        },
+        ["<Down>"] = {
+          c = function()
+            if cmp.visible() then
+              cmp.select_next_item()
+            else
+              cmp.complete()
+            end
+          end,
+        },
+        ["<Up>"] = {
+          c = function()
+            if cmp.visible() then
+              cmp.select_prev_item()
+            else
+              cmp.complete()
+              cmp.select_prev_item()
+            end
+          end,
+        },
+      },
       sources = cmp.config.sources({
         { name = "path" },
       }, {

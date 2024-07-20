@@ -3,13 +3,14 @@ return {
   event = "VeryLazy",
   opts = {
     icons = {
-      mappings = false
+      mappings = false,
     },
-
     win = {
       border = "single", -- none, single, double, shadow
-      title = false
+      title = false,
     },
+    timeout = true,
+    timeoutlen = 1000,
     spec = {
       {
         mode = { "n", "v" },
@@ -23,9 +24,9 @@ return {
         { "<leader>N", group = "Package Info" },
         { "<leader>g", group = "Go" },
         { "<leader>W", group = "Workspace" },
-        { "[",         group = "prev" },
-        { "]",         group = "next" },
-        { "g",         group = "goto" },
+        { "[", group = "prev" },
+        { "]", group = "next" },
+        { "g", group = "goto" },
       },
     },
   },
@@ -33,7 +34,7 @@ return {
     {
       "<leader>?",
       function()
-        require("which-key").show({ global = false })
+        require("which-key").show { global = false }
       end,
       desc = "Buffer Local Keymaps (which-key)",
     },

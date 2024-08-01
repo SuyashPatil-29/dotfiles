@@ -15,6 +15,7 @@ vim.opt.undofile = true -- enable persistent undo
 vim.opt.swapfile = false -- creates a swapfile
 vim.opt.smartindent = true -- make indenting smarter again
 vim.opt.smartcase = true -- smart case
+vim.opt.scrolloff = 22 -- add 8 lines to the scrolloff
 vim.opt.completeopt = { "menuone", "noselect" } -- mostly just for cmp
 vim.opt.ttimeoutlen = 10
 vim.o.fileencodings = "utf-8"

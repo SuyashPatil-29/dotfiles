@@ -20,6 +20,38 @@ return {
     end,
   },
 
+  -- nvim-dap
+  {
+    "williamboman/mason.nvim",
+    "mfussenegger/nvim-dap",
+  },
+
+  {
+    "jay-babu/mason-nvim-dap.nvim",
+    dependencies = {
+      "mfussenegger/nvim-dap",
+      "williamboman/mason.nvim",
+    },
+    cmd = { "DapInstall", "DapUninstall" },
+    opts = {
+      automatic_installation = true,
+      handlers = {},
+      ensure_installed = {
+        "delve", -- Go debugging
+      },
+      config = function()
+        require("dap").setup()
+      end,
+    },
+  },
+
+  -- nvim-dap for go
+  {
+    "leoluz/nvim-dap-go",
+    config = function()
+      require("dap-go").setup()
+    end,
+  },
   -- useful when there are embedded languages in certain types of files (e.g. Vue or React)
   { "joosepalviste/nvim-ts-context-commentstring", lazy = true },
 

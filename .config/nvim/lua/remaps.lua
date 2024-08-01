@@ -1,3 +1,6 @@
+-- Remove the annoying escape key after pressing jk
+vim.api.nvim_set_keymap("i", "jk", "<ESC>", { noremap = true, silent = true })
+
 -- Save current file with <leader>w
 vim.keymap.set("n", "<leader>w", ":w<CR>", { noremap = true, silent = true })
 

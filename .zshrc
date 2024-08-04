@@ -46,7 +46,6 @@ alias zconf="nvim ~/.zshrc"
 alias dotfiles='cd ~/Desktop/dotfiles/'
 alias nvim-adib="NVIM_APPNAME=nvim-adib nvim"
 alias countlines="tokei ."
-alias tattach="tmux attach"
 alias ta="tmux attach"
 alias tkill="tmux kill-session -t"
 alias tl="tmux list-sessions"

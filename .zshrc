@@ -204,3 +204,9 @@ nvm() {
 
 # neofetch --ascii ~/.config/neofetch/ascii.txt
 # neofetch
+source ~/.secrets
+# Start SSH agent
+eval "$(ssh-agent -s)"
+
+# Add your SSH private key
+ssh-add ~/.ssh/id_ed25519

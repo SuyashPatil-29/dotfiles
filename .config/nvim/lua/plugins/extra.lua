@@ -167,7 +167,7 @@ return {
           show_buffer_close_icons = true,
           show_close_icon = true,
           max_name_length = 18,
-          max_prefix_length = 15, -- prefix used when a buffer is de-duplicated
+          max_prefix_length = 15,   -- prefix used when a buffer is de-duplicated
           tab_size = 15,
           diagnostics = "nvim_lsp", -- Display diagnostics in the bufferline
           left_trunc_marker = "",
@@ -340,8 +340,8 @@ return {
   {
     "ggandor/leap.nvim",
     keys = {
-      { "s", mode = { "n", "x", "o" }, desc = "Leap forward to" },
-      { "S", mode = { "n", "x", "o" }, desc = "Leap backward to" },
+      { "s",  mode = { "n", "x", "o" }, desc = "Leap forward to" },
+      { "S",  mode = { "n", "x", "o" }, desc = "Leap backward to" },
       { "gs", mode = { "n", "x", "o" }, desc = "Leap from windows" },
     },
     config = function(_, opts)
@@ -553,4 +553,86 @@ return {
   --     { "<leader>e", "<cmd>Yazi<CR>", desc = "Toggle Yazi" },
   --   },
   -- },
+
+  -- Lazy
+  {
+    "piersolenski/wtf.nvim",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+    },
+    opts = {},
+    keys = {
+      {
+        "gw",
+        mode = { "n", "x" },
+        function()
+          require("wtf").ai()
+        end,
+        desc = "Debug diagnostic with AI",
+      },
+      {
+        mode = { "n" },
+        "gW",
+        function()
+          require("wtf").search()
+        end,
+        desc = "Search diagnostic with Google",
+      },
+    },
+    config = function()
+      require("wtf").setup(
+        {
+          -- Default AI popup type
+          popup_type = "vertical",
+          -- An alternative way to set your API key
+          openai_api_key = vim.env.OPENAI_API_KEY,
+          -- ChatGPT Model
+          openai_model_id = "gpt-3.5-turbo",
+          -- Send code as well as diagnostics
+          context = true,
+          -- Set your preferred language for the response
+          language = "english",
+          -- Any additional instructions
+          additional_instructions = "Start the reply with 'OH HAI THERE'",
+          -- Default search engine, can be overridden by passing an option to WtfSeatch
+          search_engine = "google",
+          -- Callbacks
+          hooks = {
+            request_started = nil,
+            request_finished = nil,
+          },
+          -- Add custom colours
+          winhighlight = "Normal:Normal,FloatBorder:FloatBorder",
+        }
+      )
+    end
+  },
+  -- Lazy
+  {
+    'piersolenski/telescope-import.nvim',
+    dependencies = 'nvim-telescope/telescope.nvim',
+    config = function()
+      require("telescope").load_extension("import")
+      require("telescope").setup({
+        extensions = {
+          import = {
+            -- Add imports to the top of the file keeping the cursor in place
+            insert_at_top = true,
+            -- Support additional languages
+            custom_languages = {
+              {
+                -- The regex pattern for the import statement
+                regex = [[^(?:import(?:[\"'\s]*([\w*{}\n, ]+)from\s*)?[\"'\s](.*?)[\"'\s].*)]],
+                -- The Vim filetypes
+                filetypes = { "typescript", "typescriptreact", "javascript", "react" },
+                -- The filetypes that ripgrep supports (find these via `rg --type-list`)
+                extensions = { "js", "ts" },
+              },
+            },
+          },
+        },
+        vim.keymap.set("n", "<leader>fi", "<cmd>Telescope import<cr>", { desc = "Import" })
+      })
+    end
+  }
 }

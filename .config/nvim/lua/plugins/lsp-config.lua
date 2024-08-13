@@ -4,7 +4,7 @@ return {
   dependencies = {
     { "williamboman/mason.nvim", config = true },
     "williamboman/mason-lspconfig.nvim",
-    { "j-hui/fidget.nvim", opts = {} },
+    { "j-hui/fidget.nvim",       opts = {} },
     { "b0o/schemastore.nvim" },
     "folke/neodev.nvim",
     "OmniSharp/omnisharp-vim",
@@ -44,6 +44,15 @@ return {
       },
     }
 
+    local function organize_imports()
+      local params = {
+        command = "_typescript.organizeImports",
+        arguments = { vim.api.nvim_buf_get_name(0) },
+        title = ""
+      }
+      vim.lsp.buf.execute_command(params)
+    end
+
     -- Mason-lspconfig setup
     require("mason-lspconfig").setup {
       ensure_installed = vim.tbl_keys(require "plugins.lsp.servers"),
@@ -63,6 +72,17 @@ return {
     -- Capabilities
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+
+    lspconfig.tsserver.setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+      commands = {
+        OrganizeImports = {
+          organize_imports,
+          description = "Organize Imports"
+        }
+      }
+    }
 
     -- On attach function
     local on_attach = function(client, bufnr)
@@ -171,10 +191,10 @@ return {
     mason_lspconfig.setup_handlers {
       function(server_name)
         if
-          server_name ~= "gopls"
-          and server_name ~= "clangd"
-          and server_name ~= "tsserver"
-          and server_name ~= "pyright"
+            server_name ~= "gopls"
+            and server_name ~= "clangd"
+            and server_name ~= "tsserver"
+            and server_name ~= "pyright"
         then
           setup_lsp(server_name, {
             settings = require("plugins.lsp.servers")[server_name],

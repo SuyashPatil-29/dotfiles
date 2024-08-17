@@ -1,4 +1,5 @@
 return {
+  -- C# support
   { "OrangeT/vim-csharp" },
   -- Autotags
   {
@@ -65,57 +66,6 @@ return {
     end,
   },
 
-  -- Oil is a new way to edit your files
-
-  -- {
-  --   "stevearc/oil.nvim",
-  --   opts = {},
-  --   dependencies = { "nvim-tree/nvim-web-devicons" },
-  --   config = function()
-  --     require("oil").setup {
-  --       default_file_explorer = false,
-  --       delete_to_trash = true,
-  --       skip_confirm_for_simple_edits = true,
-  --       view_options = {
-  --         show_hidden = true,
-  --         natural_order = true,
-  --         is_always_hidden = function(name, _)
-  --           return name == ".." or name == ".git"
-  --         end,
-  --       },
-  --       float = {
-  --         padding = 2,
-  --         max_width = 90,
-  --         max_height = 0,
-  --       },
-  --       win_options = {
-  --         wrap = true,
-  --         winblend = 0,
-  --       },
-  --       keymaps = {
-  --         ["C-s"] = false,
-  --         ["<C-c>"] = false,
-  --         ["<leader>c"] = "actions.close",
-  --         ["g?"] = "actions.show_help",
-  --         ["<CR>"] = "actions.select",
-  --         ["<C-v>"] = { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" },
-  --         ["<C-h>"] = { "actions.select", opts = { horizontal = true }, desc = "Open the entry in a horizontal split" },
-  --         ["<C-t>"] = { "actions.select", opts = { tab = true }, desc = "Open the entry in new tab" },
-  --         ["<C-p>"] = "actions.preview",
-  --         ["<C-l>"] = "actions.refresh",
-  --         ["-"] = "actions.parent",
-  --         ["_"] = "actions.open_cwd",
-  --         ["`"] = "actions.cd",
-  --         ["~"] = { "actions.cd", opts = { scope = "tab" }, desc = ":tcd to the current oil directory" },
-  --         ["gs"] = "actions.change_sort",
-  --         ["gx"] = "actions.open_external",
-  --         ["g."] = "actions.toggle_hidden",
-  --         ["g\\"] = "actions.toggle_trash",
-  --       },
-  --     }
-  --   end,
-  -- },
-  --
   -- Neovim notifications and LSP progress messages
   {
     "j-hui/fidget.nvim",
@@ -355,60 +305,7 @@ return {
     end,
   },
 
-  -- breadcrumbs
-  -- {
-  --   "LunarVim/breadcrumbs.nvim",
-  --   config = function()
-  --     require("breadcrumbs").setup()
-  --   end,
-  -- },
-  -- Simple winbar/statusline plugin that shows your current code context
-  -- {
-  --   "SmiteshP/nvim-navic",
-  --   config = function()
-  --     local icons = require("config.icons")
-  --     require("nvim-navic").setup({
-  --       highlight = true,
-  --       lsp = {
-  --         auto_attach = true,
-  --         preference = { "typescript-tools" },
-  --       },
-  --       click = true,
-  --       separator = " " .. icons.ui.ChevronRight .. " ",
-  --       depth_limit = 0,
-  --       depth_limit_indicator = "..",
-  --       icons = {
-  --         File = " ",
-  --         Module = " ",
-  --         Namespace = " ",
-  --         Package = " ",
-  --         Class = " ",
-  --         Method = " ",
-  --         Property = " ",
-  --         Field = " ",
-  --         Constructor = " ",
-  --         Enum = " ",
-  --         Interface = " ",
-  --         Function = " ",
-  --         Variable = " ",
-  --         Constant = " ",
-  --         String = " ",
-  --         Number = " ",
-  --         Boolean = " ",
-  --         Array = " ",
-  --         Object = " ",
-  --         Key = " ",
-  --         Null = " ",
-  --         EnumMember = " ",
-  --         Struct = " ",
-  --         Event = " ",
-  --         Operator = " ",
-  --         TypeParameter = " ",
-  --       },
-  --     })
-  --   end,
-  -- },
-
+    -- breadcrumbs for neovim
   {
     "utilyre/barbecue.nvim",
     name = "barbecue",
@@ -469,6 +366,7 @@ return {
       require("refactoring").setup {}
     end,
   },
+
   {
     "folke/persistence.nvim",
     event = "BufReadPre", -- this will only start session saving when an actual file was opened
@@ -482,55 +380,7 @@ return {
       -- require("ibl").setup()
     end,
   },
-  -- Plugin to follow links in MD
-  { "jghauser/follow-md-links.nvim" },
-  -- Images in neovim
-
-  {
-    "vhyrro/luarocks.nvim",
-    priority = 1001, -- this plugin needs to run before anything else
-    opts = {
-      rocks = { "magick" },
-    },
-  },
-  -- {
-  --   "3rd/image.nvim",
-  --   config = function()
-  --     require("image").setup {
-  --       backend = "kitty",
-  --       integrations = {
-  --         markdown = {
-  --           enabled = true,
-  --           clear_in_insert_mode = false,
-  --           download_remote_images = true,
-  --           only_render_image_at_cursor = false,
-  --           filetypes = { "markdown", "vimwiki" }, -- markdown extensions (ie. quarto) can go here
-  --           resolve_image_path = function(document_path, image_path, fallback)
-  --             return fallback(document_path, image_path)
-  --           end,
-  --         },
-  --         html = {
-  --           enabled = false,
-  --         },
-  --         css = {
-  --           enabled = false,
-  --         },
-  --       },
-  --       max_width = nil,
-  --       max_height = nil,
-  --       max_width_window_percentage = nil,
-  --       max_height_window_percentage = 50,
-  --       window_overlap_clear_enabled = false, -- toggles images when windows are overlapped
-  --       window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "" },
-  --       editor_only_render_when_focused = false, -- auto show/hide images when the editor gains/looses focus
-  --       tmux_show_only_in_active_window = false, -- auto show/hide images in the correct Tmux window (needs visual-activity off)
-  --       hijack_file_patterns = { "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp", "*.avif" }, -- render image files as images when opened
-  --     }
-  --   end,
-  -- },
-
-  -- Markdown Preview
-  -- install without yarn or npm
+  -- markdown preview
   {
     "iamcco/markdown-preview.nvim",
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
@@ -540,21 +390,7 @@ return {
     end,
   },
 
-  -- Yazi file manager for neovim
-
-  -- {
-  --   "DreamMaoMao/yazi.nvim",
-  --   dependencies = {
-  --     "nvim-telescope/telescope.nvim",
-  --     "nvim-lua/plenary.nvim",
-  --   },
-  --
-  --   keys = {
-  --     { "<leader>e", "<cmd>Yazi<CR>", desc = "Toggle Yazi" },
-  --   },
-  -- },
-
-  -- Lazy
+  -- Plugin to search and use chatgpt to answer questions
   {
     "piersolenski/wtf.nvim",
     dependencies = {
@@ -634,5 +470,23 @@ return {
         vim.keymap.set("n", "<leader>fi", "<cmd>Telescope import<cr>", { desc = "Import" })
       })
     end
-  }
+  },
+
+  {
+    "mistricky/codesnap.nvim",
+    build = "make build_generator",
+    lazy = false,
+    opts = {
+      save_path = "~/Documents/codesnap",
+      has_breadcrumbs = true,
+      bg_theme = "peach",
+      watermark = "",
+      mac_window_bar = false,
+      code_font_family = "SFMono Nerd Font",
+      has_line_number = true,
+      show_workspace = true,
+      bg_x_padding = 72,
+      bg_y_padding = 52,
+    },
+  },
 }

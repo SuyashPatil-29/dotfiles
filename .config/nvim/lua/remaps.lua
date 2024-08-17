@@ -1,5 +1,10 @@
+vim.api.nvim_set_keymap('v', '<leader>cs', ':CodeSnap<CR>', { noremap = true, silent = true })
+
 -- Remove the annoying escape key after pressing jk
 vim.api.nvim_set_keymap("i", "jk", "<ESC>", { noremap = true, silent = true })
+
+-- Remap <leader>u to undotreeToggle
+vim.keymap.set("n", "<leader>u", ":UndotreeToggle<CR>", { noremap = true, silent = true })
 
 -- Save current file with <leader>w
 vim.keymap.set("n", "<leader>w", ":w<CR>", { noremap = true, silent = true })

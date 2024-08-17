@@ -10,7 +10,7 @@ return {
   },
   config = function()
     require("chatgpt").setup {
-      api_key_cmd = "echo OPENAI_API_KEY",
+      api_key = vim.env.OPENAI_API_KEY,
     }
     vim.keymap.set("n", "<leader>cg", "<cmd>ChatGPT<cr>", { desc = "ChatGPT" })
     vim.keymap.set(

@@ -1,3 +1,4 @@
+-- Take a screenshot of the selected area
 vim.api.nvim_set_keymap('v', '<leader>cs', ':CodeSnap<CR>', { noremap = true, silent = true })
 
 -- Remove the annoying escape key after pressing jk

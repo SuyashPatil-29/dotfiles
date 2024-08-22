@@ -46,13 +46,6 @@ return {
     },
   },
 
-  -- nvim-dap for go
-  {
-    "leoluz/nvim-dap-go",
-    config = function()
-      require("dap-go").setup()
-    end,
-  },
   -- useful when there are embedded languages in certain types of files (e.g. Vue or React)
   { "joosepalviste/nvim-ts-context-commentstring", lazy = true },
 
@@ -305,7 +298,7 @@ return {
     end,
   },
 
-    -- breadcrumbs for neovim
+  -- breadcrumbs for neovim
   {
     "utilyre/barbecue.nvim",
     name = "barbecue",
@@ -354,7 +347,12 @@ return {
     end,
     -- version = "*"
   },
-
+  -- Session saving using persistence.nvim
+  {
+    "folke/persistence.nvim",
+    event = "BufReadPre", -- this will only start session saving when an actual file was opened
+    opts = {},
+  },
   {
     "ThePrimeagen/refactoring.nvim",
     enabled = false,
@@ -365,12 +363,6 @@ return {
     config = function()
       require("refactoring").setup {}
     end,
-  },
-
-  {
-    "folke/persistence.nvim",
-    event = "BufReadPre", -- this will only start session saving when an actual file was opened
-    opts = {},
   },
   {
     "ThePrimeagen/vim-be-good",
@@ -384,10 +376,11 @@ return {
   {
     "iamcco/markdown-preview.nvim",
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    ft = { "markdown" },
-    build = function()
-      vim.fn["mkdp#util#install"]()
+    build = "cd app && yarn install",
+    init = function()
+      vim.g.mkdp_filetypes = { "markdown" }
     end,
+    ft = { "markdown" },
   },
 
   -- Plugin to search and use chatgpt to answer questions
@@ -443,35 +436,6 @@ return {
       )
     end
   },
-  -- Lazy
-  {
-    'piersolenski/telescope-import.nvim',
-    dependencies = 'nvim-telescope/telescope.nvim',
-    config = function()
-      require("telescope").load_extension("import")
-      require("telescope").setup({
-        extensions = {
-          import = {
-            -- Add imports to the top of the file keeping the cursor in place
-            insert_at_top = true,
-            -- Support additional languages
-            custom_languages = {
-              {
-                -- The regex pattern for the import statement
-                regex = [[^(?:import(?:[\"'\s]*([\w*{}\n, ]+)from\s*)?[\"'\s](.*?)[\"'\s].*)]],
-                -- The Vim filetypes
-                filetypes = { "typescript", "typescriptreact", "javascript", "react" },
-                -- The filetypes that ripgrep supports (find these via `rg --type-list`)
-                extensions = { "js", "ts" },
-              },
-            },
-          },
-        },
-        vim.keymap.set("n", "<leader>fi", "<cmd>Telescope import<cr>", { desc = "Import" })
-      })
-    end
-  },
-
   {
     "mistricky/codesnap.nvim",
     build = "make build_generator",
@@ -488,5 +452,47 @@ return {
       bg_x_padding = 72,
       bg_y_padding = 52,
     },
+  },
+  -- add this to your lua/plugins.lua, lua/plugins/init.lua,  or the file you keep your other plugins:
+  {
+    'numToStr/Comment.nvim',
+    config = function()
+      require('Comment').setup()
+    end
+  },
+  {
+    "Rics-Dev/project-explorer.nvim",
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+    },
+    opts = {
+      paths = { "~/Desktop/work", "~/Desktop/web-dev" }, -- custom path set by user
+      newProjectPath = "~/Desktop/",                     --custom path for new projects
+      file_explorer = function(dir)                      --custom file explorer set by user
+        vim.cmd("Neotree close")
+        vim.cmd("Neotree " .. dir)
+      end,
+      -- Or for oil.nvim:
+      -- file_explorer = function(dir)
+      --   require("oil").open(dir)
+      -- end,
+    },
+    config = function(_, opts)
+      require("project_explorer").setup(opts)
+    end,
+    keys = {
+      { "<leader>fp", "<cmd>ProjectExplorer<cr>", desc = "Project Explorer" },
+    },
+    lazy = false,
+  },
+  {
+    "kevinhwang91/nvim-bqf",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+    config = function(_, opts)
+      require("bqf").setup(opts)
+    end,
   },
 }

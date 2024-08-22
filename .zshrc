@@ -30,7 +30,7 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 # Aliases 
 alias prisma-migrate="npx prisma migrate dev --name init"
 alias fman='compgen -c | fzf | xargs man'
-alias n="nvim ."
+alias n="nvim"
 alias ls="exa"
 alias tmux="tmux -u"
 alias c="clear"
@@ -205,8 +205,8 @@ nvm() {
 # neofetch --ascii ~/.config/neofetch/ascii.txt
 # neofetch
 source ~/.secrets
-# Start SSH agent
-eval "$(ssh-agent -s)"
-
-# Add your SSH private key
-ssh-add ~/.ssh/id_ed25519
+# # Start SSH agent
+# eval "$(ssh-agent -s)"
+#
+# # Add your SSH private key
+# ssh-add ~/.ssh/id_ed25519

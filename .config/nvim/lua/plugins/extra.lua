@@ -1,6 +1,12 @@
 return {
   -- C# support
   { "OrangeT/vim-csharp" },
+  {
+    "michaeldyrynda/carbon",
+    config = function()
+      -- vim.cmd("colorscheme carbon")
+    end,
+  },
   -- Autotags
   {
     "windwp/nvim-ts-autotag",

@@ -4,7 +4,7 @@ return {
   lazy = false,
   priority = 1000,
   config = function()
-    require("catppuccin").setup {
+    require("catppuccin").setup({
       background = {
         light = "latte",
         dark = "mocha",
@@ -352,8 +352,8 @@ return {
           }
         end,
       },
-    }
+    })
 
-    vim.api.nvim_command "colorscheme catppuccin"
+    vim.api.nvim_command("colorscheme catppuccin")
   end,
 }

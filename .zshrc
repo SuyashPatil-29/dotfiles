@@ -31,7 +31,7 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 alias prisma-migrate="npx prisma migrate dev --name init"
 alias fman='compgen -c | fzf | xargs man'
 alias n="nvim"
-alias ls="exa"
+alias ls="exa --icons --color=always --group-directories-first"
 alias tmux="tmux -u"
 alias c="clear"
 alias compile='function compile() { unsetopt promptcr; g++ "$1" -o "${1:r}" && ./"${1:r}" && rm -f "${1:r}" 2>/dev/null; }; compile'
@@ -90,6 +90,31 @@ jrun() {
 
     # Remove the compiled .class file, suppressing the "trash" message
     rm "$filename.class" > /dev/null 2>&1
+}
+
+function sesh-sessions() {
+  {
+    exec </dev/tty
+    exec <&1
+    local session
+    session=$(sesh list -t -c | fzf --height 40% --reverse --border-label ' sesh ' --border --prompt '⚡  ')
+    [[ -z "$session" ]] && return
+    sesh connect $session
+  }
+}
+
+zle     -N             sesh-sessions
+bindkey -M emacs '\es' sesh-sessions
+bindkey -M vicmd '\es' sesh-sessions
+bindkey -M viins '\es' sesh-sessions
+
+function yy() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
 }
 
 # IP address lookup
@@ -160,6 +185,7 @@ export PATH="/usr/local/go/bin:$PATH"
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="/usr/bin/git:$PATH"
 export PATH="/usr/bin/curl:$PATH"
+export PATH="$PATH:/opt/nvim-linux64/bin"
 
 # This is for go tour locally
 export PATH=$PATH:~/go/bin

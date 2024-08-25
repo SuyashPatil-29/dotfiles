@@ -1,83 +1,3 @@
-local colorscheme = require "plugins.colorscheme"
-
--- Color Picker Configuration
-local function configure_color_picker()
-  local actions = require "telescope.actions"
-  local action_state = require "telescope.actions.state"
-  local pickers = require "telescope.pickers"
-  local finders = require "telescope.finders"
-  local sorters = require "telescope.sorters"
-
-  local all_colors = {
-    "catppuccin",
-    "catppuccin-frappe",
-    "catppuccin-latte",
-    "catppuccin-macchiato",
-    "codemonkey",
-    "catppuccin-mocha",
-    "desert",
-    "elflord",
-    "evening",
-    "habamax",
-    "industry",
-    "koehler",
-    "lunaperche",
-    "murphy",
-    "pablo",
-    "peachpuff",
-    "quiet",
-    "ron",
-    "slate",
-    "torte",
-    "oh-lucy",
-    "oh-lucy-evening",
-    "onedark",
-    "onedarker",
-    "onedarkest",
-    "tokyonight",
-  }
-
-  local function enter(prompt_bufnr)
-    local selected = action_state.get_selected_entry()
-    if selected then
-      vim.cmd("colorscheme " .. selected.value)
-      actions.close(prompt_bufnr)
-    end
-  end
-
-  local function next_color(prompt_bufnr)
-    actions.move_selection_next(prompt_bufnr)
-    local selected = action_state.get_selected_entry()
-    vim.cmd("colorscheme " .. selected.value)
-  end
-
-  local function prev_color(prompt_bufnr)
-    actions.move_selection_previous(prompt_bufnr)
-    local selected = action_state.get_selected_entry()
-    vim.cmd("colorscheme " .. selected.value)
-  end
-
-  local opts = {
-    finder = finders.new_table(all_colors),
-    sorter = sorters.get_generic_fuzzy_sorter {},
-    attach_mappings = function(prompt_bufnr, map)
-      map("i", "<CR>", enter)
-      map("i", "<Down>", next_color)
-      map("i", "<Up>", prev_color)
-      map("n", "<CR>", enter)
-      map("n", "<Down>", next_color)
-      map("n", "<Up>", prev_color)
-      return true
-    end,
-    theme = "dropdown",
-  }
-
-  local colors = pickers.new(opts)
-  vim.keymap.set("n", "<leader>cp", function()
-    colors:find()
-  end, { desc = "Color Picker" })
-end
-
 -- Tmux Sessions Configuration
 local function configure_tmux_sessions()
   local actions = require "telescope.actions"
@@ -263,7 +183,6 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       configure_telescope()
-      configure_color_picker()
       configure_tmux_sessions()
       setup_key_mappings()
     end,

@@ -1,3 +1,6 @@
+-- Change theme using Telescope
+vim.api.nvim_set_keymap('n', '<leader>cp', ':Telescope colorscheme<CR>', { noremap = true, silent = true })
+
 -- Take a screenshot of the selected area
 vim.api.nvim_set_keymap('v', '<leader>cs', ':CodeSnap<CR>', { noremap = true, silent = true })
 
@@ -22,9 +25,6 @@ vim.keymap.set("n", "<leader>Y", '"+Y', { desc = 'Yank into " register' })
 vim.keymap.set("n", "<leader>ih", function()
   vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end, { desc = "Toggle inlay hints" })
-
--- Open Oil in float
-vim.keymap.set("n", "<leader>c", "<CMD>Oil<CR>", { desc = "Open Oil" })
 
 -- paste over currently selected text without yanking it
 vim.keymap.set("v", "p", '"_dp')

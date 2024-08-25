@@ -22,7 +22,7 @@ create_or_switch_session() {
 }
 
 # Use fzf to select a directory, limiting search to ~/Desktop
-selected_dir=$(find ~/Desktop -type d | fzf --height 40% --reverse)
+selected_dir=$(find ~/Desktop/work/ ~/Desktop/web-dev/ ~/Desktop/dotfiles/ ~/Desktop/dotfiles/.config/ -maxdepth 1 -mindepth 1 -type d | fzf --height 40% --reverse --preview 'exa --icons --color=always {}')
 if [ -n "$selected_dir" ]; then
     create_or_switch_session "$selected_dir"
 else

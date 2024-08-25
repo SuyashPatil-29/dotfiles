@@ -86,8 +86,8 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec kitty
 
-# start brave
-bindsym Mod4+Shift+b exec firefox
+# start zen-browser
+bindsym $mod+Shift+b exec "$HOME/Desktop/apps/zen-specific.AppImage"
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -180,7 +180,7 @@ bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
 set $term kitty
-set $browser firefox
+set $browser "$HOME/Desktop/apps/zen-specific.AppImage"
 set $discord discord
 set $whatsapp whatsie
 

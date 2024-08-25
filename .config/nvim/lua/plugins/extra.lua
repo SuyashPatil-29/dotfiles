@@ -266,12 +266,6 @@ return {
       show_current_context = false,
     },
   },
-
-  -- editor config support
-  {
-    "editorconfig/editorconfig-vim",
-  },
-
   -- Enhanced f/t motions for Leap
   {
     "ggandor/flit.nvim",
@@ -500,5 +494,8 @@ return {
     config = function(_, opts)
       require("bqf").setup(opts)
     end,
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
   },
 }

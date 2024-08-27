@@ -28,6 +28,10 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Aliases 
+alias ai="mods --no-cache"
+alias ais="mods"
+alias aic="mods -m codellama:7b --no-cache -f"
+alias aigpt="mods -m gpt-3.5-turbo --no-cache -f"
 alias prisma-migrate="npx prisma migrate dev --name init"
 alias fman='compgen -c | fzf | xargs man'
 alias n="nvim"

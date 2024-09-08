@@ -1,12 +1,6 @@
 return {
   -- C# support
   { "OrangeT/vim-csharp" },
-  {
-    "michaeldyrynda/carbon",
-    config = function()
-      -- vim.cmd("colorscheme carbon")
-    end,
-  },
   -- Autotags
   {
     "windwp/nvim-ts-autotag",
@@ -206,37 +200,37 @@ return {
   },
 
   {
-    "echasnovski/mini.animate",
-    version = false,
-    event = "VeryLazy",
-    config = function()
-      require("mini.animate").setup {
-        -- Cursor path
-        cursor = {
-          enable = false,
-        },
-
-        -- Vertical scroll
-        scroll = {
-          enable = true,
-        },
-
-        -- Window resize
-        resize = {
-          enable = true,
-        },
-
-        -- Window open
-        open = {
-          enable = true,
-        },
-
-        -- Window close
-        close = {
-          enable = true,
-        },
-      }
-    end,
+    -- "echasnovski/mini.animate",
+    -- version = false,
+    -- event = "VeryLazy",
+    -- config = function()
+    --   require("mini.animate").setup {
+    --     -- Cursor path
+    --     cursor = {
+    --       enable = false,
+    --     },
+    --
+    --     -- Vertical scroll
+    --     scroll = {
+    --       enable = true,
+    --     },
+    --
+    --     -- Window resize
+    --     resize = {
+    --       enable = true,
+    --     },
+    --
+    --     -- Window open
+    --     open = {
+    --       enable = true,
+    --     },
+    --
+    --     -- Window close
+    --     close = {
+    --       enable = true,
+    --     },
+    --   }
+    -- end,
   },
 
   -- Lorem Ipsum generator for Neovim

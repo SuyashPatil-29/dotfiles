@@ -4,16 +4,15 @@ return {
   dependencies = {
     { "williamboman/mason.nvim", config = true },
     "williamboman/mason-lspconfig.nvim",
-    { "j-hui/fidget.nvim",       opts = {} },
+    { "j-hui/fidget.nvim", opts = {} },
     { "b0o/schemastore.nvim" },
     "folke/neodev.nvim",
     "OmniSharp/omnisharp-vim",
     "rcarriga/nvim-notify",
   },
-  lazy = false,
   config = function()
     -- Set up nvim-notify
-    vim.notify = require "notify"
+    vim.notify = require("notify")
 
     -- Table to store start times for each LSP server
     local lsp_start_times = {}
@@ -33,7 +32,7 @@ return {
     end
 
     -- Mason setup
-    require("mason").setup {
+    require("mason").setup({
       ui = {
         border = "rounded",
         icons = {
@@ -42,7 +41,7 @@ return {
           package_uninstalled = "✗",
         },
       },
-    }
+    })
 
     local function organize_imports()
       local params = {
@@ -54,35 +53,20 @@ return {
     end
 
     -- Mason-lspconfig setup
-    require("mason-lspconfig").setup {
-      ensure_installed = vim.tbl_keys(require "plugins.lsp.servers"),
-    }
-
-    require("mason-lspconfig").setup {
-      ensure_installed = { "tailwindcss", "html", "clangd" },
-    }
+    require("mason-lspconfig").setup({
+      ensure_installed = { "tailwindcss", "html", "clangd", "tsserver", "gopls", "pyright" },
+    })
 
     -- Set up neodev before setting up other LSPs
     require("neodev").setup()
 
     -- LSP configurations
-    local lspconfig = require "lspconfig"
-    local util = require "lspconfig/util"
+    local lspconfig = require("lspconfig")
+    local util = require("lspconfig/util")
 
     -- Capabilities
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
-
-    lspconfig.tsserver.setup {
-      on_attach = on_attach,
-      capabilities = capabilities,
-      commands = {
-        OrganizeImports = {
-          organize_imports,
-          description = "Organize Imports"
-        }
-      }
-    }
 
     -- On attach function
     local on_attach = function(client, bufnr)
@@ -156,6 +140,12 @@ return {
           },
         },
       },
+      commands = {
+        OrganizeImports = {
+          organize_imports,
+          description = "Organize Imports"
+        }
+      }
     })
 
     -- Gopls setup
@@ -180,32 +170,23 @@ return {
         local path = util.path
         local default_venv_path = path.join(vim.env.HOME, "Desktop", "NHCE", "Sem4", "ds", "bin", "python")
         local default_venv_path_for_DAA = path.join(vim.env.HOME, "Desktop", "NHCE", "Sem4", "daa", "bin", "python")
+        config.settings = config.settings or {}
+        config.settings.python = config.settings.python or {}
         config.settings.python.pythonPath = default_venv_path
-        config.settings.python.pythonPath = default_venv_path_for_DAA
+        -- Note: You might want to use a different way to select between these two paths
+        -- config.settings.python.pythonPath = default_venv_path_for_DAA
       end,
       filetypes = { "python" },
     })
 
-    -- Mason-lspconfig handler for other servers
-    local mason_lspconfig = require "mason-lspconfig"
-    mason_lspconfig.setup_handlers {
-      function(server_name)
-        if
-            server_name ~= "gopls"
-            and server_name ~= "clangd"
-            and server_name ~= "tsserver"
-            and server_name ~= "pyright"
-        then
-          setup_lsp(server_name, {
-            settings = require("plugins.lsp.servers")[server_name],
-            filetypes = (require("plugins.lsp.servers")[server_name] or {}).filetypes,
-          })
-        end
-      end,
-    }
+    -- Set up other LSP servers
+    local servers = { "html", "cssls", "tailwindcss" }
+    for _, server in ipairs(servers) do
+      setup_lsp(server)
+    end
 
     -- Diagnostic configuration
-    vim.diagnostic.config {
+    vim.diagnostic.config({
       title = false,
       underline = true,
       virtual_text = true,
@@ -219,7 +200,7 @@ return {
         header = "",
         prefix = "",
       },
-    }
+    })
 
     -- Diagnostic signs
     local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }

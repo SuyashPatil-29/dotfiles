@@ -37,7 +37,7 @@ vim.keymap.set("n", "X", ":keeppatterns substitute/\\s*\\%#\\s*/\\r/e <bar> norm
 vim.keymap.set("n", "<C-x>", "dd", { noremap = true, silent = true })
 
 -- Space + a to select all text
-vim.api.nvim_set_keymap("n", "<leader>a", "ggVG", { noremap = true, silent = true, desc = "Select all text" })
+vim.api.nvim_set_keymap("n", "<A-a>", "ggVG", { noremap = true, silent = true, desc = "Select all text" })
 
 -- Replace word under cursor across entire buffer
 vim.keymap.set(

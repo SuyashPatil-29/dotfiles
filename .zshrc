@@ -28,6 +28,7 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Aliases 
+alias lg="lazygit"
 alias ai="mods --no-cache"
 alias ais="mods"
 alias aic="mods -m codellama:7b --no-cache -f"
@@ -49,12 +50,15 @@ alias tconf="nvim ~/.tmux.conf"
 alias zconf="nvim ~/.zshrc"
 alias dotfiles='cd ~/Desktop/dotfiles/'
 alias nvim-adib="NVIM_APPNAME=nvim-adib nvim"
+alias nvim-d="NVIM_APPNAME=nvim-d nvim"
 alias countlines="tokei ."
 alias ta="tmux attach"
 alias tkill="tmux kill-session -t"
 alias tl="tmux list-sessions"
 alias brightup="sudo brightnessctl set +10%"
 alias brightdown="sudo brightnessctl set 10%-"
+alias work="timer 60m && notify-send 'Pomodoro' 'Work Timer is up! Take a Break 😊'"
+alias rest="timer 10m && notify-send 'Pomodoro' 'Break is over! Get back to work 😬'"
 
 ##install logo-ls from https://terminalroot.com/install-a-ls-command-that-shows-file-icons/
 # alias ls="logo-ls"
@@ -224,13 +228,6 @@ nvm() {
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
     nvm "$@"
 }
-
-# Source the Lazyman shell initialization for aliases and nvims selector
-# shellcheck source=.config/nvim-Lazyman/.lazymanrc
-[ -f ~/.config/nvim-Lazyman/.lazymanrc ] && source ~/.config/nvim-Lazyman/.lazymanrc
-# Source the Lazyman .nvimsbind for nvims key binding
-# shellcheck source=.config/nvim-Lazyman/.nvimsbind
-[ -f ~/.config/nvim-Lazyman/.nvimsbind ] && source ~/.config/nvim-Lazyman/.nvimsbind
 
 # neofetch --ascii ~/.config/neofetch/ascii.txt
 # neofetch

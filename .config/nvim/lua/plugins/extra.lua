@@ -21,6 +21,16 @@ return {
     end,
   },
 
+  -- Neoclip is a plugin for Neovim that provides the ability to copy and paste text to and from the system clipboard.
+  {
+    "AckslD/nvim-neoclip.lua",
+    dependencies = {
+    },
+    config = function()
+      require('neoclip').setup()
+    end,
+  },
+
   -- nvim-dap
   {
     "williamboman/mason.nvim",
@@ -45,7 +55,6 @@ return {
       end,
     },
   },
-
   -- useful when there are embedded languages in certain types of files (e.g. Vue or React)
   { "joosepalviste/nvim-ts-context-commentstring", lazy = true },
 

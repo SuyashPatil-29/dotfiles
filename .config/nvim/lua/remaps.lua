@@ -1,3 +1,6 @@
+-- Open Telescope neoclip on <C-.>
+vim.keymap.set("n", "<leader>o", "<cmd>Telescope neoclip<CR>", { desc = "Telescope Neoclip" })
+
 -- Change theme using Telescope
 vim.api.nvim_set_keymap('n', '<leader>cp', ':Telescope colorscheme<CR>', { noremap = true, silent = true })
 

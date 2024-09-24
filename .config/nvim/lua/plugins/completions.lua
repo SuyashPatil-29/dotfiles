@@ -73,6 +73,41 @@ return {
       }),
     })
 
+    cmp.setup.cmdline("/", {
+      mapping = cmp.mapping.preset.cmdline {
+        ["<S-Tab>"] = {
+          c = function()
+            if cmp.visible() then
+              cmp.close()
+            end
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-p>", true, true, true), "n", true)
+          end,
+        },
+        ["<Down>"] = {
+          c = function()
+            if cmp.visible() then
+              cmp.select_next_item()
+            else
+              cmp.complete()
+            end
+          end,
+        },
+        ["<Up>"] = {
+          c = function()
+            if cmp.visible() then
+              cmp.select_prev_item()
+            else
+              cmp.complete()
+              cmp.select_prev_item()
+            end
+          end,
+        },
+      },
+      sources = {
+        { name = "buffer" },
+      },
+    })
+
     local luasnip = require "luasnip"
     local kind_icons = {
       Text = "",

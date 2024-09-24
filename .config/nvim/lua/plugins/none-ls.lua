@@ -10,12 +10,8 @@ return {
       "jay-babu/mason-null-ls.nvim",
       "nvim-lua/plenary.nvim",
       "nvimtools/none-ls-extras.nvim",
-      "gbprod/none-ls-shellcheck.nvim",
     },
     config = function()
-      require("null-ls").register(require "none-ls-shellcheck.diagnostics")
-      require("null-ls").register(require "none-ls-shellcheck.code_actions")
-
       local mason_null_ls = require "mason-null-ls"
       mason_null_ls.setup {
         ensure_installed = {
@@ -23,7 +19,6 @@ return {
           "stylua",
           "eslint_d",
           "golangci_lint",
-          "shellcheck",
           "buf",
           "gofumpt",
           "spell",

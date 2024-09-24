@@ -33,14 +33,13 @@ alias ai="mods --no-cache"
 alias ais="mods"
 alias aic="mods -m codellama:7b --no-cache -f"
 alias aigpt="mods -m gpt-3.5-turbo --no-cache -f"
-alias prisma-migrate="npx prisma migrate dev --name init"
 alias fman='compgen -c | fzf | xargs man'
 alias n="nvim"
+alias vim="nvim ."
 alias ls="exa --icons --color=always --group-directories-first"
 alias tmux="tmux -u"
 alias c="clear"
 alias compile='function compile() { unsetopt promptcr; g++ "$1" -o "${1:r}" && ./"${1:r}" && rm -f "${1:r}" 2>/dev/null; }; compile'
-alias tmux="tmux -u"
 alias tn="tmux new -As \$(basename \$(pwd))"
 alias entersql="sudo mysql -u root -p"
 alias nv='fd --type f --hidden --exclude .git | fzf-tmux -p | xargs nvim'
@@ -55,10 +54,9 @@ alias countlines="tokei ."
 alias ta="tmux attach"
 alias tkill="tmux kill-session -t"
 alias tl="tmux list-sessions"
-alias brightup="sudo brightnessctl set +10%"
-alias brightdown="sudo brightnessctl set 10%-"
 alias work="timer 60m && notify-send 'Pomodoro' 'Work Timer is up! Take a Break 😊'"
 alias rest="timer 10m && notify-send 'Pomodoro' 'Break is over! Get back to work 😬'"
+alias pnpx="pnpm dlx"
 
 ##install logo-ls from https://terminalroot.com/install-a-ls-command-that-shows-file-icons/
 # alias ls="logo-ls"

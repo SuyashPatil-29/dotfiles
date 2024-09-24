@@ -32,6 +32,16 @@ vim.opt.runtimepath:append "/home/suyash/.config/nvim/lua"
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- if a file is a .env or .envrc file, set the filetype to sh
+vim.filetype.add({
+  filename = {
+    [".env"] = "sh",
+    [".envrc"] = "sh",
+    ["*.env"] = "sh",
+    ["*.envrc"] = "sh"
+  }
+})
+
 -- --Add spellchecks
 -- vim.opt.spelllang = 'en_us'
 -- vim.opt.spell = true

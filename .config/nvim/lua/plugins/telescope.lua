@@ -45,6 +45,10 @@ local function configure_telescope()
   local actions = require "telescope.actions"
   local icons = require "config.icons"
 
+  telescope.load_extension("neoclip")
+  telescope.load_extension("noice")
+
+
   vim.api.nvim_create_autocmd("FileType", {
     pattern = "TelescopeResults",
     callback = function(ctx)
@@ -165,6 +169,7 @@ local function configure_telescope()
 
   telescope.load_extension "ui-select"
 end
+
 
 -- Key Mappings for Telescope
 local function setup_key_mappings()

@@ -1,21 +1,23 @@
 font-family = SFMono Nerd Font 
 font-size = 12
-theme = GruvboxDarkHard
+theme = GruvboxDark
 shell-integration-features = no-cursor,sudo,no-title
 cursor-style = block
+font-feature = -liga
 
 title = "Ghostty"
-fullscreen
 clipboard-trim-trailing-spaces
+macos-titlebar-style = transparent
 
 # background-opacity = 0.96
 mouse-hide-while-typing = true
 mouse-scroll-multiplier = 2
 window-padding-balance = true 
-window-padding-x = 8
+window-padding-x = 6
 window-padding-y = 0
 window-save-state = always
-background = 1C2021
+background = 1d2021
+foreground = d4be98
 
 # keybindings
 keybind = cmd+s>r=reload_config

@@ -8,6 +8,7 @@ font-feature = -liga
 title = "Ghostty"
 clipboard-trim-trailing-spaces
 macos-titlebar-style = transparent
+window-theme = ghostty
 
 # background-opacity = 0.96
 mouse-hide-while-typing = true

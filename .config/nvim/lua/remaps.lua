@@ -1,3 +1,9 @@
+-- Go to next declaration
+vim.keymap.set("n", "gd", "<cmd>LspUI diagnostic next<CR>", { desc = "Go to next diagnostic" })
+
+-- Go to previous declaration
+vim.keymap.set("n", "gp", "<cmd>LspUI diagnostic prev<CR>", { desc = "Go to previous diagnostic" })
+
 -- Open Telescope neoclip on <C-.>
 vim.keymap.set("n", "<leader>o", "<cmd>Telescope neoclip<CR>", { desc = "Telescope Neoclip" })
 
@@ -13,7 +19,7 @@ vim.api.nvim_set_keymap("i", "jk", "<ESC>", { noremap = true, silent = true })
 -- Remap <leader>u to undotreeToggle
 vim.keymap.set("n", "<leader>u", ":UndotreeToggle<CR>", { noremap = true, silent = true })
 
--- Save current file with <leader>w
+-- Save current file with leaderw
 vim.keymap.set("n", "<leader>w", ":w<CR>", { noremap = true, silent = true })
 
 -- Dismiss messages displayed by Noice

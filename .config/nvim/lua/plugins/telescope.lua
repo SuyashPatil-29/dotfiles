@@ -137,7 +137,6 @@ local function configure_telescope()
   local actions = require "telescope.actions"
   local icons = require "config.icons"
 
-  telescope.load_extension("neoclip")
   telescope.load_extension("noice")
 
 

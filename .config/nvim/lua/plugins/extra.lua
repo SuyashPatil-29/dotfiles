@@ -1,6 +1,15 @@
 return {
   -- C# support
   { "OrangeT/vim-csharp" },
+  {
+    "jinzhongjia/LspUI.nvim",
+    branch = "main",
+    config = function()
+      require("LspUI").setup({
+        -- config options go here
+      })
+    end
+  },
   -- Autotags
   {
     "windwp/nvim-ts-autotag",
@@ -18,16 +27,6 @@ return {
         ":lua require('bufdelete').bufdelete(0, false)<cr>",
         { noremap = true, silent = true, desc = "Delete buffer" }
       )
-    end,
-  },
-
-  -- Neoclip is a plugin for Neovim that provides the ability to copy and paste text to and from the system clipboard.
-  {
-    "AckslD/nvim-neoclip.lua",
-    dependencies = {
-    },
-    config = function()
-      require('neoclip').setup()
     end,
   },
 

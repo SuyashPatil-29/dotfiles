@@ -32,6 +32,11 @@ vim.opt.runtimepath:append "/home/suyash/.config/nvim/lua"
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+vim.g.netrw_banner = 0          --" Remove the directory banner"
+vim.g.netrw_liststyle = 0       --" 0: thin, 1: long, 2: wide, 3: tree (buggy - avoid!)"
+vim.g.netrw_sizestyle = "H"     --" Show human-readable file sizes"
+vim.g.netrw_special_syntax = 1  --" Enable special file type highlighting"
+
 -- if a file is a .env or .envrc file, set the filetype to sh
 vim.filetype.add({
   filename = {

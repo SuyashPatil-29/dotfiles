@@ -179,14 +179,39 @@ return {
     end,
   },
 
-  -- Neovim setup for init.lua and plugin development with full signature help, docs and completion for the nvim lua API
+  -- -- Neovim setup for init.lua and plugin development with full signature help, docs and completion for the nvim lua API
+  -- {
+  --   "folke/neodev.nvim",
+  --   config = function()
+  --     require("neodev").setup {
+  --       library = { plugins = { "neotest" }, types = true },
+  --       lspconfig = true,
+  --     }
+  --   end,
+  -- },
+
   {
-    "folke/neodev.nvim",
+    'prichrd/netrw.nvim',
+    opts = {},
     config = function()
-      require("neodev").setup {
-        library = { plugins = { "neotest" }, types = true },
-      }
-    end,
+      require("netrw").setup({
+        -- File icons to use when `use_devicons` is false or if
+        -- no icon is found for the given file type.
+        icons = {
+          symlink = '',
+          directory = '',
+          file = '',
+        },
+        -- Uses mini.icon or nvim-web-devicons if true, otherwise use the file icon specified above
+        use_devicons = true,
+        mappings = {
+          -- Function mappings receive an object describing the node under the cursor
+          ['p'] = function(payload) print(vim.inspect(payload)) end,
+          -- String mappings are executed as vim commands
+          ['<Leader>p'] = ":echo 'hello world'<CR>",
+        },
+      })
+    end
   },
 
   -- Neovim Lua plugin to automatically manage character pairs. Part of 'mini.nvim' library.

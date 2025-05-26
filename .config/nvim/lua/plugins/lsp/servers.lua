@@ -36,7 +36,7 @@ return {
   vimls = {
     filetypes = { "vim" },
   },
-  tsserver = {},
+  ts_ls = {},
   gopls = {
     completeUnimported = true,
     usePlaceholders = true,

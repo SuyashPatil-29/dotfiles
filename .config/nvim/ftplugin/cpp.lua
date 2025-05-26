@@ -6,11 +6,22 @@ if vim.bo.filetype == "cpp" then
   -- Check if the buffer is empty
   if num_lines == 1 and vim.api.nvim_buf_get_lines(buf, 0, 1, false)[1] == "" then
     local lines = {
-      "#include<bits/stdc++.h>",
+      "#include \"/usr/local/include/bits/stdc++.h\"",
       "",
       "using namespace std;",
       "",
+      "bool comp(vector<int> v1, vector<int> v2) {",
+      "if (v2 > v1) {",
+      "return true;",
+      "}",
+      "return false;",
+      "}",
+      "",
       "int main(){",
+      "  ios_base::sync_with_stdio(false);",
+      "  cin.tie(NULL);",
+      "  cout.tie(NULL);",
+      "",
       "  return 0;",
       "}",
     }

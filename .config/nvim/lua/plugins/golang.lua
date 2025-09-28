@@ -30,11 +30,6 @@ local plugins = {
     end,
   },
   {
-    "jose-elias-alvarez/null-ls.nvim",
-    ft = "go",
-    opts = function() end,
-  },
-  {
     "olexsmir/gopher.nvim",
     ft = "go",
     config = function(_, opts)

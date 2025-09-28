@@ -233,5 +233,14 @@ vim.keymap.set("n", "<leader>hd", "<cmd>nohl<CR>", { desc = "Remove search highl
 -- Open the Desktop folder
 vim.keymap.set("n", "<leader>gx", ':!xdg-open "$HOME/Desktop"<CR>', { noremap = true, silent = true })
 
--- Format python code
-vim.keymap.set("n", "<leader>gp", ":silent !black %<cr>")
+-- Format code (now uses conform.nvim for all languages)
+vim.keymap.set("n", "<leader>gp", function()
+  require("conform").format({ bufnr = vim.api.nvim_get_current_buf() })
+end, { desc = "Format current buffer" })
+
+-- Additional formatting keymaps
+vim.keymap.set("n", "<leader>cf", function()
+  require("conform").format({ async = true })
+end, { desc = "Format buffer (async)" })
+
+vim.keymap.set("n", "<leader>ci", "<cmd>ConformInfo<cr>", { desc = "Conform Info" })

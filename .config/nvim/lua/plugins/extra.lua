@@ -16,18 +16,12 @@ return {
     opts = {},
   },
 
-  -- delete buffer
+  -- delete buffer (replaced with lighter alternative)
   {
-    "famiu/bufdelete.nvim",
-    event = "VeryLazy",
-    config = function()
-      vim.keymap.set(
-        "n",
-        "Q",
-        ":lua require('bufdelete').bufdelete(0, false)<cr>",
-        { noremap = true, silent = true, desc = "Delete buffer" }
-      )
-    end,
+    "echasnovski/mini.bufremove",
+    keys = {
+      { "Q", function() require("mini.bufremove").delete(0, false) end, desc = "Delete buffer", mode = "n" },
+    },
   },
 
   -- nvim-dap
@@ -85,15 +79,38 @@ return {
     config = function() end,
   },
 
-  -- Smooth scrolling neovim plugin written in lua
+  -- Smooth scrolling and animations (replaced with lighter alternative)
   {
-    "karb94/neoscroll.nvim",
-    config = function()
-      require("neoscroll").setup {
-        stop_eof = true,
-        easing_function = "sine",
-        hide_cursor = true,
-        cursor_scrolls_alone = true,
+    "echasnovski/mini.animate",
+    event = "VeryLazy",
+    opts = function()
+      -- Don't use animate when scrolling with the mouse
+      local mouse_scrolled = false
+      for _, scroll in ipairs({ "Up", "Down" }) do
+        local key = "<ScrollWheel" .. scroll .. ">"
+        vim.keymap.set({ "", "i" }, key, function()
+          mouse_scrolled = true
+          return key
+        end, { expr = true })
+      end
+
+      local animate = require("mini.animate")
+      return {
+        resize = {
+          timing = animate.gen_timing.linear({ duration = 50, unit = "total" }),
+        },
+        scroll = {
+          timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
+          subscroll = animate.gen_subscroll.equal({
+            predicate = function(total_scroll)
+              if mouse_scrolled then
+                mouse_scrolled = false
+                return false
+              end
+              return total_scroll > 1
+            end,
+          }),
+        },
       }
     end,
   },
@@ -109,6 +126,11 @@ return {
           offsets = {
             {
               filetype = "neo-tree",
+              text = "File Explorer",
+              text_align = "center",
+            },
+            {
+              filetype = "snacks_explorer",
               text = "File Explorer",
               text_align = "center",
             },
@@ -169,14 +191,38 @@ return {
     end,
   },
 
-  -- Add/change/delete surrounding delimiter pairs with ease
+  -- Add/change/delete surrounding delimiter pairs (replaced with lighter alternative)
   {
-    "kylechui/nvim-surround",
-    version = "*",
-    event = "VeryLazy",
-    config = function()
-      require("nvim-surround").setup()
+    "echasnovski/mini.surround",
+    keys = function(_, keys)
+      -- Populate the keys based on the default config
+      local plugin = require("lazy.core.config").spec.plugins["mini.surround"]
+      local opts = require("lazy.core.plugin").values(plugin, "opts", false)
+      local mappings = {
+        { opts.mappings.add, desc = "Add surrounding", mode = { "n", "v" } },
+        { opts.mappings.delete, desc = "Delete surrounding" },
+        { opts.mappings.find, desc = "Find right surrounding" },
+        { opts.mappings.find_left, desc = "Find left surrounding" },
+        { opts.mappings.highlight, desc = "Highlight surrounding" },
+        { opts.mappings.replace, desc = "Replace surrounding" },
+        { opts.mappings.update_n_lines, desc = "Update `MiniSurround.config.n_lines`" },
+      }
+      mappings = vim.tbl_filter(function(m)
+        return m[1] and #m[1] > 0
+      end, mappings)
+      return vim.list_extend(mappings, keys)
     end,
+    opts = {
+      mappings = {
+        add = "gsa", -- Add surrounding in Normal and Visual modes
+        delete = "gsd", -- Delete surrounding
+        find = "gsf", -- Find surrounding (to the right)
+        find_left = "gsF", -- Find surrounding (to the left)
+        highlight = "gsh", -- Highlight surrounding
+        replace = "gsr", -- Replace surrounding
+        update_n_lines = "gsn", -- Update `n_lines`
+      },
+    },
   },
 
   -- -- Neovim setup for init.lua and plugin development with full signature help, docs and completion for the nvim lua API
@@ -436,31 +482,30 @@ return {
       },
     },
     config = function()
-      require("wtf").setup(
-        {
-          -- Default AI popup type
-          popup_type = "vertical",
-          -- An alternative way to set your API key
-          openai_api_key = vim.env.OPENAI_API_KEY,
-          -- ChatGPT Model
-          openai_model_id = "gpt-3.5-turbo",
-          -- Send code as well as diagnostics
-          context = true,
-          -- Set your preferred language for the response
-          language = "english",
-          -- Any additional instructions
-          additional_instructions = "Start the reply with 'OH HAI THERE'",
-          -- Default search engine, can be overridden by passing an option to WtfSeatch
-          search_engine = "google",
-          -- Callbacks
-          hooks = {
-            request_started = nil,
-            request_finished = nil,
+      require("wtf").setup({
+        -- Default AI popup type
+        popup_type = "vertical",
+        -- Set your preferred language for the response
+        language = "english",
+        -- Any additional instructions
+        additional_instructions = "Start the reply with 'OH HAI THERE'",
+        -- Default search engine, can be overridden by passing an option to WtfSeatch
+        search_engine = "google",
+        -- Callbacks
+        hooks = {
+          request_started = nil,
+          request_finished = nil,
+        },
+        -- Add custom colours
+        winhighlight = "Normal:Normal,FloatBorder:FloatBorder",
+        -- New provider configuration format
+        providers = {
+          openai = {
+            api_key = vim.env.OPENAI_API_KEY,
+            model = "gpt-3.5-turbo",
           },
-          -- Add custom colours
-          winhighlight = "Normal:Normal,FloatBorder:FloatBorder",
-        }
-      )
+        },
+      })
     end
   },
   {
@@ -480,12 +525,17 @@ return {
       bg_y_padding = 52,
     },
   },
-  -- add this to your lua/plugins.lua, lua/plugins/init.lua,  or the file you keep your other plugins:
+  -- Comment plugin (replaced with lighter alternative)
   {
-    'numToStr/Comment.nvim',
-    config = function()
-      require('Comment').setup()
-    end
+    "echasnovski/mini.comment",
+    event = "VeryLazy",
+    opts = {
+      options = {
+        custom_commentstring = function()
+          return require("ts_context_commentstring.internal").calculate_commentstring() or vim.bo.commentstring
+        end,
+      },
+    },
   },
   {
     "Rics-Dev/project-explorer.nvim",

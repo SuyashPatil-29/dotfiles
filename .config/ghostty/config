@@ -1,6 +1,6 @@
 font-family = SFMono Nerd Font 
 font-size = 12
-theme = GruvboxDark
+theme = Gruvbox Dark
 shell-integration-features = no-cursor,sudo,no-title
 cursor-style = block
 font-feature = -liga

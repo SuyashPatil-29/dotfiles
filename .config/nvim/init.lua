@@ -12,6 +12,9 @@ end
 vim.opt.rtp:prepend(lazypath)
 vim.cmd "set number relativenumber"
 
+-- Load compatibility layer for deprecated functions
+require "config.compatibility"
+
 require "vim-options"
 require "remaps"
 require "snippets"

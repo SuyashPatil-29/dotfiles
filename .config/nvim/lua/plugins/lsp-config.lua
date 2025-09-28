@@ -52,10 +52,6 @@ return {
       vim.lsp.buf.execute_command(params)
     end
 
-    -- LSP configurations
-    local lspconfig = require "lspconfig"
-    local util = require "lspconfig/util"
-
     -- Capabilities
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
@@ -78,8 +74,8 @@ return {
       -- Your existing on_attach logic here
     end
 
-    -- Function to set up LSP servers
-    local function setup_lsp(server_name, config)
+    -- Function to configure LSP servers using new vim.lsp.config API
+    local function setup_lsp_server(server_name, config)
       config = config or {}
       config.on_attach = on_attach
       config.capabilities = capabilities
@@ -92,7 +88,16 @@ return {
 
       lsp_start_times[server_name] = vim.loop.hrtime()
 
-      lspconfig[server_name].setup(config)
+      -- Use new vim.lsp.config API if available, fallback to lspconfig for compatibility
+      if vim.lsp.config and vim.lsp.enable then
+        -- Configure the server using new API
+        vim.lsp.config[server_name] = config
+        vim.lsp.enable(server_name)
+      else
+        -- Fallback to old lspconfig API for older Neovim versions
+        local lspconfig = require "lspconfig"
+        lspconfig[server_name].setup(config)
+      end
     end
 
     -- Mason-lspconfig setup (single consolidated setup)
@@ -111,9 +116,10 @@ return {
               and server_name ~= "pyright"
           then
             local server_config = require("plugins.lsp.servers")[server_name] or {}
-            setup_lsp(server_name, {
-              settings = server_config,
+            setup_lsp_server(server_name, {
+              settings = server_config.settings or server_config,
               filetypes = server_config.filetypes,
+              cmd = server_config.cmd,
             })
           end
         end,
@@ -121,12 +127,14 @@ return {
     }
 
     -- Clangd setup
-    setup_lsp("clangd", {
+    setup_lsp_server("clangd", {
       filetypes = { "c", "cpp", "objc", "objcpp" },
+      cmd = { "clangd", "--background-index" },
+      root_markers = { "compile_commands.json", "compile_flags.txt", ".git" },
     })
 
     -- TypeScript setup
-    setup_lsp("ts_ls", {
+    setup_lsp_server("ts_ls", {
       filetypes = {
         "typescript",
         "typescriptreact",
@@ -166,10 +174,10 @@ return {
     })
 
     -- Gopls setup
-    setup_lsp("gopls", {
+    setup_lsp_server("gopls", {
       cmd = { "gopls" },
       filetypes = { "go", "gomod", "gowork", "gotmpl" },
-      root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+      root_markers = { "go.work", "go.mod", ".git" },
       settings = {
         gopls = {
           completeUnimported = true,
@@ -182,20 +190,28 @@ return {
     })
 
     -- Python setup
-    setup_lsp("pyright", {
-      before_init = function(_, config)
-        local path = util.path
-        local default_venv_path_for_practice = path.join(vim.env.HOME, "Desktop", "practice", "bin", "python")
-        local default_venv_path_for_practice_django = path.join(vim.env.HOME, "Desktop", "practice-django", "bin",
-          "python")
-        config.settings.python.pythonPath = default_venv_path_for_practice
-        config.settings.python.pythonPath = default_venv_path_for_practice_django
-      end,
+    setup_lsp_server("pyright", {
       filetypes = { "python" },
+      settings = {
+        python = {
+          pythonPath = vim.fn.expand("~/Desktop/practice/bin/python"), -- Default path
+        }
+      },
+      before_init = function(_, config)
+        -- Try to find virtual environment paths
+        local venv_paths = {
+          vim.fn.expand("~/Desktop/practice/bin/python"),
+          vim.fn.expand("~/Desktop/practice-django/bin/python"),
+        }
+        
+        for _, path in ipairs(venv_paths) do
+          if vim.fn.executable(path) == 1 then
+            config.settings.python.pythonPath = path
+            break
+          end
+        end
+      end,
     })
-
-    -- Mason-lspconfig handler for other servers
-    -- Remove the separate mason_lspconfig.setup_handlers call (lines 185-200)
 
     -- Diagnostic configuration
     vim.diagnostic.config {

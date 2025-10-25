@@ -471,7 +471,7 @@ return {
           require("wtf").ai()
         end,
         desc = "Debug diagnostic with AI",
-      },
+      }, 
       {
         mode = { "n" },
         "gW",

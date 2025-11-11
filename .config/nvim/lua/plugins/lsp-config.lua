@@ -194,21 +194,40 @@ return {
       filetypes = { "python" },
       settings = {
         python = {
-          pythonPath = vim.fn.expand("~/Desktop/practice/bin/python"), -- Default path
+          pythonPath = "python3", -- Default fallback
         }
       },
       before_init = function(_, config)
-        -- Try to find virtual environment paths
-        local venv_paths = {
-          vim.fn.expand("~/Desktop/practice/bin/python"),
-          vim.fn.expand("~/Desktop/practice-django/bin/python"),
-        }
-        
-        for _, path in ipairs(venv_paths) do
-          if vim.fn.executable(path) == 1 then
-            config.settings.python.pythonPath = path
-            break
+        -- Function to find virtual environment in project directory
+        local function find_venv(start_path)
+          -- Common virtual environment directory names
+          local venv_names = { "venv", ".venv", "env", ".env", "virtualenv" }
+          
+          -- Try each common venv name in the project directory
+          for _, venv_name in ipairs(venv_names) do
+            local venv_python = vim.fn.findfile("bin/python", start_path .. "/" .. venv_name)
+            if venv_python ~= "" then
+              return vim.fn.fnamemodify(venv_python, ":p")
+            end
           end
+          
+          -- Check if there's a bin/python directly in the project root
+          local root_python = start_path .. "/bin/python"
+          if vim.fn.executable(root_python) == 1 then
+            return root_python
+          end
+          
+          return nil
+        end
+        
+        -- Get the root directory of the current project
+        local root_dir = config.root_dir or vim.fn.getcwd()
+        
+        -- Try to find a virtual environment
+        local venv_python = find_venv(root_dir)
+        
+        if venv_python then
+          config.settings.python.pythonPath = venv_python
         end
       end,
     })

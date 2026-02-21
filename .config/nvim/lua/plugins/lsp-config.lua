@@ -109,18 +109,36 @@ return {
       ),
       handlers = {
         function(server_name)
-          if
-              server_name ~= "gopls"
-              and server_name ~= "clangd"
-              and server_name ~= "ts_ls"
-              and server_name ~= "pyright"
-          then
-            local server_config = require("plugins.lsp.servers")[server_name] or {}
-            setup_lsp_server(server_name, {
-              settings = server_config.settings or server_config,
-              filetypes = server_config.filetypes,
-              cmd = server_config.cmd,
-            })
+          -- Skip servers we configure manually or want to disable
+          local skip_servers = {
+            "gopls",
+            "clangd",
+            "ts_ls",
+            "pyright",
+            "glint",      -- Disable glint (causes conflicts)
+            "ember",      -- Disable ember (use ts_ls for .js/.ts files)
+          }
+
+          local should_skip = false
+          for _, skip_name in ipairs(skip_servers) do
+            if server_name == skip_name then
+              should_skip = true
+              break
+            end
+          end
+
+          if not should_skip then
+            local servers = require("plugins.lsp.servers")
+            local server_config = servers[server_name]
+
+            -- Only set up servers that have explicit configurations
+            if server_config then
+              setup_lsp_server(server_name, {
+                settings = server_config.settings or server_config,
+                filetypes = server_config.filetypes,
+                cmd = server_config.cmd,
+              })
+            end
           end
         end,
       }
@@ -249,11 +267,20 @@ return {
       },
     }
 
-    -- Diagnostic signs
+    -- Diagnostic signs (using new API)
     local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
     for type, icon in pairs(signs) do
       local hl = "DiagnosticSign" .. type
-      vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+      vim.diagnostic.config({
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = signs.Error,
+            [vim.diagnostic.severity.WARN] = signs.Warn,
+            [vim.diagnostic.severity.HINT] = signs.Hint,
+            [vim.diagnostic.severity.INFO] = signs.Info,
+          }
+        }
+      })
     end
   end,
 }

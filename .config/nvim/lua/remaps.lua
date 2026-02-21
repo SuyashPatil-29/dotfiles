@@ -4,11 +4,9 @@ vim.keymap.set("n", "gd", "<cmd>LspUI diagnostic next<CR>", { desc = "Go to next
 -- Go to previous declaration
 vim.keymap.set("n", "gp", "<cmd>LspUI diagnostic prev<CR>", { desc = "Go to previous diagnostic" })
 
--- Open Telescope neoclip on <C-.>
-vim.keymap.set("n", "<leader>o", "<cmd>Telescope neoclip<CR>", { desc = "Telescope Neoclip" })
-
--- Change theme using Telescope
-vim.api.nvim_set_keymap('n', '<leader>cp', ':Telescope colorscheme<CR>', { noremap = true, silent = true })
+-- Note: <leader>o is now mapped to buffers in snacks.nvim
+-- Change theme - using command mode instead
+vim.api.nvim_set_keymap('n', '<leader>cp', ':colorscheme ', { noremap = true })
 
 -- Take a screenshot of the selected area
 vim.api.nvim_set_keymap('v', '<leader>cs', ':CodeSnap<CR>', { noremap = true, silent = true })
@@ -138,15 +136,7 @@ vim.api.nvim_set_keymap(
   { noremap = true, silent = true, desc = "Delete everything on screen" }
 )
 
-vim.api.nvim_set_keymap("n", "<A-Up>", ":m-2<CR>", { noremap = true, silent = true })
-
-vim.api.nvim_set_keymap("n", "<A-Down>", ":m+1<CR>", { noremap = true, silent = true })
-
--- Move selected text up
-vim.api.nvim_set_keymap("x", "<A-Up>", "dkP`[V`]", { noremap = true, silent = true })
-
--- Move selected text down
-vim.api.nvim_set_keymap("x", "<A-Down>", "dp`[V`]", { noremap = true, silent = true })
+-- Note: Alt+Up/Down for moving lines is now handled by mini.move plugin
 
 -- Map Shift+Alt+Up to copy the current line above and move the cursor to the new line
 vim.api.nvim_set_keymap(
@@ -185,28 +175,6 @@ vim.api.nvim_set_keymap(
   "v",
   "<S-A-Down>",
   "<cmd>'<,'>t'>+1<CR>:call repeat#set('\\<Plug>MultipleCursorAction', v:count1)<CR>gvjo<Esc>r=<CR>",
-  { noremap = true, silent = true }
-)
-
--- Move selected text up
-vim.api.nvim_set_keymap("x", "<A-Up>", "dkP`[V`]", { noremap = true, silent = true })
-
--- Move selected text down
-vim.api.nvim_set_keymap("x", "<A-Down>", "dp`[V`]", { noremap = true, silent = true })
-
--- Map Shift+Alt+Up to copy the current line above and move the cursor to the new line
-vim.api.nvim_set_keymap(
-  "n",
-  "<S-A-Up>",
-  '<cmd>call append(line(".") - 1, getline("."))<CR>k',
-  { noremap = true, silent = true }
-)
-
--- Map Shift+Alt+Down to copy the current line below and move the cursor to the new line
-vim.api.nvim_set_keymap(
-  "n",
-  "<S-A-Down>",
-  '<cmd>call append(line("."), getline("."))<CR>j',
   { noremap = true, silent = true }
 )
 

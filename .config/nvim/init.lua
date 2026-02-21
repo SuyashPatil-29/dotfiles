@@ -10,11 +10,11 @@ if not vim.loop.fs_stat(lazypath) then
   }
 end
 vim.opt.rtp:prepend(lazypath)
-vim.cmd "set number relativenumber"
 
 -- Load compatibility layer for deprecated functions
 require "config.compatibility"
 
+-- Load vim options first (including leader key)
 require "vim-options"
 require "remaps"
 require "snippets"

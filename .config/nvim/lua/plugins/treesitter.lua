@@ -3,18 +3,54 @@ return { -- Highlight, edit, and navigate code
   build = ":TSUpdate",
   opts = {
     ensure_installed = {
+      -- Scripting
       "bash",
-      "c",
-      "html",
       "lua",
       "luadoc",
-      "markdown",
+      "python",
       "vim",
       "vimdoc",
-      "java",
+
+      -- Web Development
+      "html",
+      "css",
+      "scss",
+      "javascript", -- Handles JSX
+      "typescript", -- Handles TSX
+      "tsx",
+      "json",
+      "jsonc",
+      "yaml",
+      "toml",
+      "graphql",
+
+      -- Systems Programming
+      "c",
       "cpp",
-      "c_sharp",
+      "rust",
       "go",
+      "zig",
+
+      -- Other Languages
+      "java",
+      "c_sharp",
+      "kotlin",
+      "swift",
+      "ruby",
+      "php",
+
+      -- Documentation & Markup
+      "markdown",
+      "markdown_inline",
+      "regex",
+      "comment",
+
+      -- Config files
+      "dockerfile",
+      "gitignore",
+      "gitcommit",
+      "git_config",
+      "ini",
     },
     -- Autoinstall languages that are not installed
     auto_install = true,
@@ -32,6 +68,7 @@ return { -- Highlight, edit, and navigate code
 
     -- Prefer git instead of curl in order to improve connectivity in some environments
     require("nvim-treesitter.install").prefer_git = true
+
     ---@diagnostic disable-next-line: missing-fields
     require("nvim-treesitter.configs").setup(opts)
     ---@diagnostic disable-next-line: missing-fields

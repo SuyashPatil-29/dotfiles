@@ -5,8 +5,14 @@ return {
   ---@type snacks.Config
   opts = {
     bigfile = { enabled = true },
-    dashboard = { enabled = false }, -- Disable dashboard since you want file explorer
-    explorer = { enabled = true },
+    dashboard = { enabled = false },
+    explorer = {
+      enabled = true,
+      -- Reduce diagnostics overhead to prevent buffer errors
+      diagnostics = {
+        enabled = false, -- Disable if causing issues, can be re-enabled later
+      },
+    },
     indent = { enabled = false },
     input = { enabled = true },
     notifier = {
@@ -72,19 +78,23 @@ return {
   
   config = function(_, opts)
     require("snacks").setup(opts)
-    
-    -- Auto-open explorer on startup (like you wanted with Neo-tree)
-    vim.api.nvim_create_autocmd("VimEnter", {
-      desc = "Open Snacks explorer on startup",
-      group = vim.api.nvim_create_augroup("snacks_auto_open", { clear = true }),
-      callback = function()
-        -- Only open if no file was opened and no stdin
-        if vim.fn.argc() == 0 and not vim.o.insertmode then
-          vim.schedule(function()
-            Snacks.explorer()
-          end)
-        end
-      end,
-    })
+
+    -- Auto-open explorer disabled due to buffer race condition
+    -- Use <leader>e or <leader><tab> to manually open the explorer
+    -- Uncomment below if you want auto-open (may cause buffer errors):
+    --
+    -- vim.api.nvim_create_autocmd("VimEnter", {
+    --   desc = "Open Snacks explorer on startup",
+    --   group = vim.api.nvim_create_augroup("snacks_auto_open", { clear = true }),
+    --   callback = function()
+    --     if vim.fn.argc() == 0 and not vim.o.insertmode then
+    --       vim.defer_fn(function()
+    --         if vim.api.nvim_buf_is_valid(0) then
+    --           Snacks.explorer()
+    --         end
+    --       end, 200)
+    --     end
+    --   end,
+    -- })
   end,
 }

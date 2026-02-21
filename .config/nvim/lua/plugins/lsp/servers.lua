@@ -88,4 +88,6 @@ return {
     filetypes = { "c", "cpp", "objc", "objcpp" },
     root_markers = { "compile_commands.json", "compile_flags.txt", ".git" },
   },
+  -- Note: glint/ember LSP disabled due to conflicts with ts_ls
+  -- For Ember/Glimmer projects, use ts_ls which handles .gjs/.gts files
 }

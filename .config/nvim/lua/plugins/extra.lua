@@ -376,28 +376,39 @@ return {
     "utilyre/barbecue.nvim",
     name = "barbecue",
     version = "*",
+    event = "LspAttach",
     dependencies = {
       "SmiteshP/nvim-navic",
-      "nvim-tree/nvim-web-devicons", -- optional dependency
+      "nvim-tree/nvim-web-devicons",
     },
     opts = {
-      -- configurations go here
+      attach_navic = false, -- Prevent barbecue from auto-attaching navic (causes conflicts)
+      create_autocmd = false,
     },
-    config = function()
-      require("barbecue").setup {
-        create_autocmd = false, -- prevent barbecue from updating itself automatically
-      }
+    config = function(_, opts)
+      require("barbecue").setup(opts)
+
+      -- Setup navic manually to handle multiple LSP servers gracefully
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("navic_attach", { clear = true }),
+        callback = function(args)
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          if client and client.server_capabilities.documentSymbolProvider then
+            -- Silently try to attach, ignore if already attached
+            pcall(function()
+              require("nvim-navic").attach(client, args.buf)
+            end)
+          end
+        end,
+      })
 
       vim.api.nvim_create_autocmd({
-        "WinScrolled", -- or WinResized on NVIM-v0.9 and higher
+        "WinScrolled",
         "BufWinEnter",
         "CursorHold",
         "InsertLeave",
-
-        -- include this if you have set `show_modified` to `true`
-        -- "BufModifiedSet",
       }, {
-        group = vim.api.nvim_create_augroup("barbecue.updater", {}),
+        group = vim.api.nvim_create_augroup("barbecue.updater", { clear = true }),
         callback = function()
           require("barbecue.ui").update()
         end,
@@ -537,40 +548,36 @@ return {
       },
     },
   },
-  {
-    "Rics-Dev/project-explorer.nvim",
-    dependencies = {
-      "nvim-telescope/telescope.nvim",
-    },
-    opts = {
-      paths = { "~/Desktop/work", "~/Desktop/web-dev" }, -- custom path set by user
-      newProjectPath = "~/Desktop/",                     --custom path for new projects
-      file_explorer = function(dir)                      --custom file explorer set by user
-        vim.cmd("Neotree close")
-        vim.cmd("Neotree " .. dir)
-      end,
-      -- Or for oil.nvim:
-      -- file_explorer = function(dir)
-      --   require("oil").open(dir)
-      -- end,
-    },
-    config = function(_, opts)
-      require("project_explorer").setup(opts)
-    end,
-    keys = {
-      { "<leader>fp", "<cmd>ProjectExplorer<cr>", desc = "Project Explorer" },
-    },
-    lazy = false,
-  },
+  -- Disabled: project-explorer requires telescope which we've removed
+  -- Use Snacks.nvim picker or cd to project directories instead
+  -- {
+  --   "Rics-Dev/project-explorer.nvim",
+  --   dependencies = {
+  --     "nvim-telescope/telescope.nvim",
+  --   },
+  --   opts = {
+  --     paths = { "~/Desktop/work", "~/Desktop/web-dev" },
+  --     newProjectPath = "~/Desktop/",
+  --     file_explorer = function(dir)
+  --       vim.cmd("Neotree close")
+  --       vim.cmd("Neotree " .. dir)
+  --     end,
+  --   },
+  --   config = function(_, opts)
+  --     require("project_explorer").setup(opts)
+  --   end,
+  --   keys = {
+  --     { "<leader>fp", "<cmd>ProjectExplorer<cr>", desc = "Project Explorer" },
+  --   },
+  --   lazy = false,
+  -- },
   {
     "kevinhwang91/nvim-bqf",
+    ft = "qf",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
     },
-    config = function(_, opts)
-      require("bqf").setup(opts)
-    end,
+    opts = {},
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",

@@ -48,7 +48,7 @@ return {
 
     dashboard.section.header.val = vim.split(logo, "\n")
     dashboard.section.buttons.val = {
-      dashboard.button("f", " " .. " Find Project", "<cmd>ProjectExplorer<cr>"),
+      dashboard.button("f", " " .. " Find file", "<cmd>Telescope find_files<cr>"),
       dashboard.button("n", " " .. " New file", ":ene <BAR> startinsert <CR>"),
       dashboard.button("r", " " .. " Recent files", ":Telescope oldfiles <CR>"),
       dashboard.button("s", " " .. "Restore Session", '<cmd>lua require("persistence").load()<cr>'),

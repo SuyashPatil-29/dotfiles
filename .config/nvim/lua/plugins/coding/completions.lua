@@ -1,7 +1,9 @@
 return {
   -- Autocompletion
   "hrsh7th/nvim-cmp",
-  event = "InsertEnter",
+  -- Load on InsertEnter (buffer completion) AND CmdlineEnter so that `:`/`/`
+  -- command-line suggestions work even before entering insert mode.
+  event = { "InsertEnter", "CmdlineEnter" },
   dependencies = {
     -- Snippet Engine & its associated nvim-cmp source
     "L3MON4D3/LuaSnip",
@@ -132,7 +134,6 @@ return {
       EnumMember = "",
       Constant = "󰏿",
       Struct = "",
-      Supermaven = " ",
       Event = "",
       Operator = "󰆕",
       TypeParameter = "󰅲",
@@ -184,7 +185,6 @@ return {
       },
       sources = {
         { name = "tailwindcss-colorizer-cmp" }, -- Add this line to prioritize tailwindcss-colorizer-cmp
-        { name = "supermaven" },
         { name = "nvim_lsp" },
         { name = "nvim_lua" },
         { name = "luasnip" },

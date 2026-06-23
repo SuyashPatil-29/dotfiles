@@ -18,7 +18,23 @@ require "config.compatibility"
 require "vim-options"
 require "remaps"
 require "snippets"
-require("lazy").setup "plugins"
+
+-- Plugins are organized into category folders under lua/plugins/.
+-- lazy.nvim does not recurse into subdirectories automatically, so each
+-- category is imported explicitly here.
+require("lazy").setup({
+  spec = {
+    { import = "plugins.ui" },
+    { import = "plugins.editor" },
+    { import = "plugins.coding" },
+    { import = "plugins.lsp" },
+    { import = "plugins.ai" },
+    { import = "plugins.lang" },
+    { import = "plugins.git" },
+  },
+  install = { colorscheme = { "catppuccin" } },
+  checker = { enabled = false },
+})
 
 if vim.opt.termguicolors:get() then
   vim.opt.termguicolors = true

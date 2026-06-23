@@ -68,21 +68,6 @@ return {
     --   }),
     -- })
 
-    ls.add_snippets("cs", {
-      s(
-        "logc",
-        fmt([[Debug.Log($"<color={}>{}</color>");]], {
-          c(1, {
-            t "red",
-            t "green",
-            t "blue",
-            t "cyan",
-            t "magenta",
-          }),
-          i(2),
-        })
-      ),
-    })
 
     ls.add_snippets("typescriptreact", {
 

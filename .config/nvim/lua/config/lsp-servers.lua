@@ -73,11 +73,24 @@ return {
       },
     },
   },
-  pyright = {
-    cmd = { "pyright-langserver", "--stdio" },
+  -- Python: basedpyright (types) is configured manually in lsp-config.lua so it
+  -- can auto-detect the project virtualenv. Listed here so Mason installs it.
+  basedpyright = {
+    cmd = { "basedpyright-langserver", "--stdio" },
     filetypes = { "python" },
     root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", "pyrightconfig.json", ".git" },
   },
+  -- Python: ruff (lint + format + imports, Rust-fast). Configured in lsp-config.lua.
+  ruff = {
+    cmd = { "ruff", "server" },
+    filetypes = { "python" },
+    root_markers = { "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" },
+  },
+  -- Ember (ember-language-server) is NOT installed via Mason: the `ember-language-server`
+  -- npm package is unpublished (404). Install the maintained fork once with:
+  --   npm install -g @lifeart/ember-language-server
+  -- It is then configured manually in lsp-config.lua and only attaches inside
+  -- Ember projects (ember-cli-build.js) to templates/glimmer files.
   yamlls = {
     cmd = { "yaml-language-server", "--stdio" },
     filetypes = { "yaml", "yaml.docker-compose" },
@@ -88,6 +101,7 @@ return {
     filetypes = { "c", "cpp", "objc", "objcpp" },
     root_markers = { "compile_commands.json", "compile_flags.txt", ".git" },
   },
-  -- Note: glint/ember LSP disabled due to conflicts with ts_ls
-  -- For Ember/Glimmer projects, use ts_ls which handles .gjs/.gts files
+  -- Note: glint (template type-checking) is project-local (@glint/core), so it is
+  -- not installed via Mason. It is configured in lsp-config.lua and only starts
+  -- in projects that have a glint config or ember-cli-build.js.
 }

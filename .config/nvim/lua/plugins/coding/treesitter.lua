@@ -33,7 +33,6 @@ return { -- Highlight, edit, and navigate code
 
       -- Other Languages
       "java",
-      "c_sharp",
       "kotlin",
       "swift",
       "ruby",

@@ -1,6 +1,7 @@
 return {
   {
     "nvim-lualine/lualine.nvim",
+    event = "VeryLazy",
     config = function()
       local harpoon = require "harpoon.mark"
 
@@ -37,8 +38,6 @@ return {
         return string.format("󱡅 %s/%d", current_mark, total_marks)
       end
 
-      local wtf = require("wtf")
-
       require("lualine").setup {
         options = {
           theme = "auto",
@@ -58,7 +57,6 @@ return {
           },
           lualine_x = {
             "filetype",
-            wtf.get_status
           },
         },
       }

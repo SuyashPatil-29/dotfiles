@@ -386,4 +386,9 @@ return {
       -- vim.cmd.colorscheme("gruvbox-material")
     end,
   },
+
+  -- Extra colorschemes available for `:colorscheme` / `<leader>cp`
+  { "rebelot/kanagawa.nvim", lazy = true },
+  { "Yazeed1s/oh-lucy.nvim", lazy = true },
+  { "LunarVim/Colorschemes", lazy = true },
 }

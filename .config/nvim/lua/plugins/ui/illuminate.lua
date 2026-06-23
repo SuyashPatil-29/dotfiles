@@ -30,7 +30,6 @@ return {
       "TelescopePrompt",
     },
   },
-  lazy = false,
   config = function(_, opts)
     require("illuminate").configure(opts)
 

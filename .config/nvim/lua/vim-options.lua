@@ -42,7 +42,7 @@ vim.opt.updatetime = 100
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 vim.opt.pumheight = 10
 
--- Disable netrw (using snacks.nvim explorer instead)
+-- Disable netrw (using neo-tree as the file explorer instead)
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 

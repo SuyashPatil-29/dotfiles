@@ -1,6 +1,10 @@
 return {
   'akinsho/toggleterm.nvim',
   version = "*",
+  cmd = { "ToggleTerm", "TermExec" },
+  keys = {
+    { [[<c-\>]], "<cmd>ToggleTerm<cr>", mode = { "n", "t" }, desc = "Toggle terminal" },
+  },
   config = function()
     local status_ok, toggleterm = pcall(require, "toggleterm")
     if not status_ok then

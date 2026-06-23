@@ -6,10 +6,8 @@ return {
     "williamboman/mason-lspconfig.nvim",
     { "j-hui/fidget.nvim",       opts = {} },
     { "b0o/schemastore.nvim" },
-    "OmniSharp/omnisharp-vim",
     "rcarriga/nvim-notify",
   },
-  lazy = false,
   config = function()
     -- Set up nvim-notify
     vim.notify = require "notify"
@@ -104,9 +102,14 @@ return {
     local mason_lspconfig = require("mason-lspconfig")
     mason_lspconfig.setup {
       ensure_installed = vim.tbl_extend("force",
-        vim.tbl_keys(require("plugins.lsp.servers") or {}),
+        vim.tbl_keys(require("config.lsp-servers") or {}),
         { "tailwindcss", "html", "clangd" }
       ),
+      -- mason-lspconfig v2 auto-enables installed servers. Exclude legacy pyright
+      -- so it doesn't run alongside basedpyright on Python files.
+      automatic_enable = {
+        exclude = { "pyright" },
+      },
       handlers = {
         function(server_name)
           -- Skip servers we configure manually or want to disable
@@ -128,7 +131,7 @@ return {
           end
 
           if not should_skip then
-            local servers = require("plugins.lsp.servers")
+            local servers = require("config.lsp-servers")
             local server_config = servers[server_name]
 
             -- Only set up servers that have explicit configurations
@@ -207,47 +210,125 @@ return {
       },
     })
 
-    -- Python setup
-    setup_lsp_server("pyright", {
-      filetypes = { "python" },
-      settings = {
-        python = {
-          pythonPath = "python3", -- Default fallback
-        }
-      },
-      before_init = function(_, config)
-        -- Function to find virtual environment in project directory
-        local function find_venv(start_path)
-          -- Common virtual environment directory names
-          local venv_names = { "venv", ".venv", "env", ".env", "virtualenv" }
-          
-          -- Try each common venv name in the project directory
-          for _, venv_name in ipairs(venv_names) do
-            local venv_python = vim.fn.findfile("bin/python", start_path .. "/" .. venv_name)
-            if venv_python ~= "" then
-              return vim.fn.fnamemodify(venv_python, ":p")
+    -- =====================================================================
+    -- Python: basedpyright (types) + ruff (lint/format/imports)
+    -- Virtualenv is detected automatically, so no per-project config needed.
+    -- =====================================================================
+
+    -- Resolve the Python interpreter for the current project.
+    -- Order: activated shell venv -> conda -> a venv found by walking up the
+    -- directory tree from the file/root -> system python3.
+    local function resolve_python_path(root_dir)
+      if vim.env.VIRTUAL_ENV and vim.env.VIRTUAL_ENV ~= "" then
+        return vim.env.VIRTUAL_ENV .. "/bin/python"
+      end
+      if vim.env.CONDA_PREFIX and vim.env.CONDA_PREFIX ~= "" then
+        return vim.env.CONDA_PREFIX .. "/bin/python"
+      end
+
+      local venv_names = { ".venv", "venv", "env", ".env", "virtualenv" }
+      local dir = root_dir
+      if not dir or dir == "" then
+        dir = vim.fn.getcwd()
+      end
+      -- Also start from the current buffer's directory so it works even when the
+      -- LSP root resolves higher up than the venv (e.g. monorepos / scratch dirs).
+      local buf_dir = vim.fn.expand("%:p:h")
+      for _, start in ipairs({ buf_dir, dir }) do
+        local cur = start
+        while cur and cur ~= "" do
+          for _, name in ipairs(venv_names) do
+            local candidate = cur .. "/" .. name .. "/bin/python"
+            if vim.fn.executable(candidate) == 1 then
+              return candidate
             end
           end
-          
-          -- Check if there's a bin/python directly in the project root
-          local root_python = start_path .. "/bin/python"
-          if vim.fn.executable(root_python) == 1 then
-            return root_python
+          local parent = vim.fn.fnamemodify(cur, ":h")
+          if parent == cur then
+            break
           end
-          
-          return nil
+          cur = parent
         end
-        
-        -- Get the root directory of the current project
-        local root_dir = config.root_dir or vim.fn.getcwd()
-        
-        -- Try to find a virtual environment
-        local venv_python = find_venv(root_dir)
-        
-        if venv_python then
-          config.settings.python.pythonPath = venv_python
+      end
+
+      local sys = vim.fn.exepath("python3")
+      return sys ~= "" and sys or "python3"
+    end
+
+    setup_lsp_server("basedpyright", {
+      cmd = { "basedpyright-langserver", "--stdio" },
+      filetypes = { "python" },
+      root_markers = {
+        "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt",
+        "Pipfile", "pyrightconfig.json", ".git",
+      },
+      settings = {
+        basedpyright = {
+          analysis = {
+            autoSearchPaths = true,
+            useLibraryCodeForTypes = true,
+            diagnosticMode = "openFilesOnly",
+            typeCheckingMode = "standard",
+            autoImportCompletions = true,
+            inlayHints = {
+              variableTypes = true,
+              functionReturnTypes = true,
+              callArgumentNames = true,
+            },
+          },
+        },
+        python = {},
+      },
+      before_init = function(_, config)
+        config.settings = config.settings or {}
+        config.settings.python = config.settings.python or {}
+        config.settings.python.pythonPath = resolve_python_path(config.root_dir)
+      end,
+    })
+
+    -- Ruff: linting, formatting and import organization. Let basedpyright own
+    -- hover so we don't get duplicate hover popups.
+    setup_lsp_server("ruff", {
+      cmd = { "ruff", "server" },
+      filetypes = { "python" },
+      root_markers = { "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" },
+    })
+
+    vim.api.nvim_create_autocmd("LspAttach", {
+      group = vim.api.nvim_create_augroup("ruff_no_hover", { clear = true }),
+      callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        if client and client.name == "ruff" then
+          client.server_capabilities.hoverProvider = false
         end
       end,
+    })
+
+    -- =====================================================================
+    -- Ember: ember-language-server (Ember features) + glint (template types).
+    -- ember only attaches to templates/glimmer files inside Ember projects, so
+    -- it never conflicts with ts_ls on regular .js/.ts files.
+    -- =====================================================================
+    setup_lsp_server("ember", {
+      cmd = { "ember-language-server", "--stdio" },
+      filetypes = { "handlebars", "typescript.glimmer", "javascript.glimmer" },
+      root_markers = { "ember-cli-build.js", ".git" },
+    })
+
+    -- glint is a project-local dependency (@glint/core). It only starts when a
+    -- glint config (or ember-cli-build.js) is present, so it is inert elsewhere.
+    setup_lsp_server("glint", {
+      cmd = { "glint-language-server", "--stdio" },
+      filetypes = {
+        "html.handlebars", "handlebars",
+        "typescript", "typescript.glimmer",
+        "javascript", "javascript.glimmer",
+      },
+      init_options = { glint = { useGlobal = false } },
+      root_markers = {
+        ".glintrc.yml", ".glintrc", ".glintrc.json", ".glintrc.js",
+        "glint.config.js", "ember-cli-build.js",
+      },
     })
 
     -- Diagnostic configuration

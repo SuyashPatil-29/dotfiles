@@ -1,7 +1,7 @@
 return {
   {
     "lewis6991/gitsigns.nvim",
-    lazy = false,
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
       local icons = require "config.icons"
       require("gitsigns").setup {
@@ -100,13 +100,21 @@ return {
   },
   {
     "sindrets/diffview.nvim",
-    event = "VeryLazy",
     cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
   },
-  -- Git related plugins
-  "tpope/vim-fugitive",
-  "tpope/vim-rhubarb",
+  -- Git related plugins (loaded on their commands)
+  {
+    "tpope/vim-fugitive",
+    cmd = { "Git", "G", "Gdiffsplit", "Gread", "Gwrite", "Gedit", "Gblame", "GBrowse" },
+    dependencies = { "tpope/vim-rhubarb" },
+  },
 
   -- not git, but it's okay
-  "mbbill/undotree",
+  {
+    "mbbill/undotree",
+    cmd = "UndotreeToggle",
+    keys = {
+      { "<leader>u", "<cmd>UndotreeToggle<cr>", desc = "Undo tree" },
+    },
+  },
 }
